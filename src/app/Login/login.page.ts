@@ -57,6 +57,7 @@ export class LoginPage {
 
   setError(message: string = ''){
     this.error = message;
+    console.log('error desde login: ', this.error);
   }
   async handleSignUp(){
     try {

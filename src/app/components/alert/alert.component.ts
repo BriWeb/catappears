@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output,  } from '@angular/core';
 
 @Component({
   selector: 'app-alert',
@@ -10,5 +10,12 @@ export class AlertComponent{
   constructor() { }
 
   @Input() error: string = '';
+  @Output() setError = new EventEmitter<string>();
+  
+  closeAlert(){
+    this.error = '';
+    console.log('Error desde alert: ', this.error);
+    this.setError.emit(this.error);
+  }
 
 }

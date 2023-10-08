@@ -108,4 +108,4 @@
   </ng-template>
 </ion-modal>
 <ion-loading class="custom-loading" message="Cargando..." spinner="lines-sharp" id="loading"></ion-loading>
-<app-alert *ngIf="error" [error]="error"></app-alert>
+<app-alert *ngIf="error" [error]="error" (setError)="setError($event)"></app-alert>

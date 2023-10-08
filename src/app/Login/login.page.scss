@@ -5,11 +5,9 @@
 // }
 .login{
   overflow-x: auto;
-  // min-height: 100vh;
   min-height: calc(100vh - 51px); //51 (tab) + 38 (alerta)
   // height: clamp(500px, calc(100vh - 51px), 900px);
   max-width: 550px;
-  // padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,7 +61,6 @@ form fieldset{
 }
 
 .buttons-login, .buttons-account{
-  // margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;

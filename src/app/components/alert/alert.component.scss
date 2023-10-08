@@ -5,11 +5,19 @@
     right: 0;
     background-color: red;
     color: white;
-    padding: 10px;
     text-align: center;
     bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     // transform: translateY(-100%);
     // animation: slide-up 4s linear forwards;
+}
+
+.error-alert__button{
+    --padding-top: 0;
+    --padding-bottom: 0;
+    margin: 0;
 }
 
 // @keyframes slide-up {
