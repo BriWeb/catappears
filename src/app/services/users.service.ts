@@ -4,7 +4,7 @@ import { initializeApp } from 'firebase/app';
 // import { getAuth } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
 import {getAuth, Auth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, FacebookAuthProvider } from 'firebase/auth';
 // import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { Router } from "@angular/router";
 
@@ -49,12 +49,16 @@ export class UsersService {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, username, password);
 
+      console.log(userCredential);
       const {user} = userCredential;
-
+      console.log("Meta data:", user.metadata);
       result = {
         ret: true, 
         data: user
       }
+
+      const docRef = await this.createUserCollection(userCredential);
+      console.log(docRef);
       return result;
       
     } catch (error : any) {
@@ -96,5 +100,35 @@ export class UsersService {
     }
   }
 
+  async createUserCollection(userCredential: any) {
+    try {
+  
+      const docRef = await addDoc(collection(this.db, "users"), {
+        uid : userCredential.user.uid,
+        first: "",
+        last: "",
+        email: userCredential.user.email,
+        creationTime : userCredential.user.metadata.creationTime,
+        lastLoginAt : userCredential.user.metadata.lastLoginAt,
+      });
+
+      console.log("Document written with ID: ", docRef.id);
+      return docRef;
+    } catch (error) {
+      console.error('Error al crear la colección de usuario', error);
+      return error;
+    }
+  }
+
+  async getUserCollection(){
+    try {
+      const querySnapshot = await getDocs(collection(this.db, "users"));
+      querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
