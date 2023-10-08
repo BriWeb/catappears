@@ -1,0 +1,11 @@
+<ion-fab slot="fixed" vertical="top" horizontal="end" id="icon-log-out">
+  <ion-fab-button color="danger">
+    <ion-icon name="log-out-outline" size="large"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<ion-alert
+  trigger="icon-log-out"
+  header="¿Desea cerrar sesión?"
+  [buttons]="alertButtons"
+  (didDismiss)="setResult($event)"
+></ion-alert>

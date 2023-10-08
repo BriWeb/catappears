@@ -1,0 +1,111 @@
+<div class="login">
+  <div class="logo-containter">
+    <ion-img
+      src="../../assets/cats.jpg"
+      class="logo-cats"
+      alt="Logo CatAppears"
+    ></ion-img>
+  </div>
+  <form (submit)="handleSignIn()">
+    <!-- <fieldset> -->
+      <legend>Sign In</legend>
+      <ion-item class="form__item">
+        <ion-input 
+          class="form__input"
+          name="signInUser"
+          [(ngModel)]="signIn.user"
+          label="Introduce el usuario" 
+          labelPlacement="floating" 
+          [clearInput]="true" 
+          placeholder="Email" 
+          [counter]="true"
+          maxlength="40">
+        </ion-input>
+      </ion-item>
+      <ion-item class="form__item">
+        <ion-input 
+          class="form__input"
+          name="signInPass"
+          [(ngModel)]="signIn.pass"
+          [type]="showPassword ? 'text' : 'password'"
+          label="Introduce la contraseña" 
+          labelPlacement="floating" 
+          placeholder="Contraseña" 
+          [clearOnEdit]="false"
+          [counter]="true"
+          maxlength="20"
+          #passInput 
+        ></ion-input>
+        <ion-button fill="clear" class="eye-button" slot="end" (click)="togglePasswordVisibility($event)">
+          <ion-icon [name]="showPassword ? 'eye' : 'eye-off'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-button class="form__submit" expand="block" color="success" type="submit" fill="outline">Iniciar Sesión</ion-button>
+    <!-- </fieldset> -->
+  </form>
+  <div class="buttons-login">
+    <ion-button color="tertiary">
+      <ion-icon slot="start" name="logo-google"></ion-icon>
+      Google
+    </ion-button>
+    <ion-button color="tertiary">
+      <ion-icon slot="start" name="logo-facebook"></ion-icon>
+      Facebook
+    </ion-button>
+  </div>
+  <div class="buttons-account">
+    <ion-button fill="clear">
+      ¿Olvidó su contraseña?
+    </ion-button>
+    <ion-button fill="clear" expand="block" (click)="openModal($event)" color="danger">
+      Sign Up
+    </ion-button>
+  </div>
+</div>
+
+<ion-modal class="singin-modal" (willDismiss)="onWillDismiss()" handle="true">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="login-title">Creación de cuenta</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()" color="#ffc409">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <form (submit)="handleSignUp()">
+        <ion-item class="modal__item">
+          <ion-input 
+            class="modal__input"
+            name="signUpUser"
+            label="Ingresa tu nuevo usuario" 
+            [(ngModel)]="signUp.user"
+            labelPlacement="floating" 
+            placeholder="Usuario" 
+            [clearOnEdit]="false"
+            [counter]="true"
+            maxlength="40"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="modal__item">
+          <ion-input 
+            class="modal__input"
+            name="signUpPass"
+            label="Ingresa tu nueva contraseña" 
+            [(ngModel)]="signUp.pass"
+            type="password"
+            labelPlacement="floating" 
+            placeholder="Contraseña" 
+            [clearOnEdit]="false"
+            [counter]="true"
+            maxlength="20"
+          ></ion-input>
+        </ion-item>
+        <ion-button class="modal__submit" expand="block" color="success" type="submit" fill="outline">Crear mi cuenta</ion-button>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+<ion-loading class="custom-loading" message="Cargando..." spinner="lines-sharp" id="loading"></ion-loading>
+<app-alert *ngIf="error" [error]="error"></app-alert>

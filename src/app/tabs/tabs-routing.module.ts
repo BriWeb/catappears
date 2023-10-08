@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { isLoginGuard } from '../guards/isLogin.guard';
+import { isLogoutGuard } from '../guards/isLogout.guard';
 
 const routes: Routes = [
   {
@@ -8,27 +10,29 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'login',
+        loadChildren: () => import('../Login/login.module').then(m => m.LoginPageModule),
+        canActivate: [isLogoutGuard]
       },
       {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        path: 'inicio',
+        loadChildren: () => import('../Inicio/inicio.module').then(m => m.InicioPageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'perfil',
+        loadChildren: () => import('../Perfil/perfil.module').then(m => m.PerfilPageModule),
+        canActivate: [isLoginGuard]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/login',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/login',
     pathMatch: 'full'
   }
 ];
