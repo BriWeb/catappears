@@ -14,7 +14,6 @@ export class AlertComponent{
   
   closeAlert(){
     this.error = '';
-    console.log('Error desde alert: ', this.error);
     this.setError.emit(this.error);
   }
 

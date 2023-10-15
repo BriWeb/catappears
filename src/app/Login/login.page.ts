@@ -57,7 +57,6 @@ export class LoginPage {
 
   setError(message: string = ''){
     this.error = message;
-    console.log('error desde login: ', this.error);
   }
   async handleSignUp(){
     try {
@@ -86,7 +85,6 @@ export class LoginPage {
     try {
       this.showLoading();
       this.setError();
-      console.log(this.signIn.user, this.signIn.pass);
       const result = await this.servicio.loginEmail(this.signIn.user, this.signIn.pass);
 
       const { ret, data } = result;

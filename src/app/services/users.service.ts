@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 // ejecutar npm install firebase
 import { initializeApp } from 'firebase/app';
-// import { getAuth } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
-import {getAuth, Auth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, FacebookAuthProvider } from 'firebase/auth';
-// import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js';
-import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
+import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, FacebookAuthProvider } from 'firebase/auth';
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { Router } from "@angular/router";
 
@@ -38,27 +36,19 @@ export class UsersService {
     }
   }
 
-
-  // console.log("Proveedor de la credencial:", user.providerId);
-  // console.log("Meta data:", user.metadata);
-  // console.log("Token:", user.getIdTokenResult()); //puede recibir "true" para refrezcar el token
-  // console.log(user.toJSON());
-
   async createEmail(username : string, password : string): Promise<any>{
     let result;
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, username, password);
-
-      console.log(userCredential);
+      
       const {user} = userCredential;
-      console.log("Meta data:", user.metadata);
       result = {
         ret: true, 
         data: user
       }
 
       const docRef = await this.createUserCollection(userCredential);
-      console.log(docRef);
+      
       return result;
       
     } catch (error : any) {
@@ -75,11 +65,11 @@ export class UsersService {
   async loginEmail(username : string, password : string): Promise<any>{
     let result;
     try {
-      const esta = this.auth.authStateReady();
-      console.log(esta);
+      // const esta = this.auth.authStateReady();
       const userCredential = await signInWithEmailAndPassword(this.auth, username, password);
-      console.log('credenciales: ' ,userCredential);
       const {user} = userCredential;
+      await this.getDocByEmail(user.email);
+
       const token = await user.getIdToken();
       localStorage.setItem('accessToken', token);
 
@@ -112,7 +102,6 @@ export class UsersService {
         lastLoginAt : userCredential.user.metadata.lastLoginAt,
       });
 
-      console.log("Document written with ID: ", docRef.id);
       return docRef;
     } catch (error) {
       console.error('Error al crear la colección de usuario', error);
@@ -120,15 +109,52 @@ export class UsersService {
     }
   }
 
-  async getUserCollection(){
+  async getAllUserCollection(){
     try {
       const querySnapshot = await getDocs(collection(this.db, "users"));
-      querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          console.log(`${doc.id} => ` + JSON.stringify(data));
       });
     } catch (error) {
       console.log(error);
     }
   }
+
+  async getUserCollection() {
+    try {
+      const userDocRef = localStorage.getItem('docRefToken');
+      if(userDocRef){
+        const userRef = doc(this.db, "users", userDocRef);
+        const userDocSnapshot = await getDoc(userRef);
+        if (userDocSnapshot.exists()) {
+          const userData = userDocSnapshot.data();
+          console.log(userData);
+        } else {
+          console.log(`El usuario con ID ${userDocRef} no existe.`);
+        }
+      }
+  
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  async getDocByEmail(email : string | null) {
+    try {
+      const usersCollectionRef = collection(this.db, "users");
+      const querySnapshot = await getDocs(query(usersCollectionRef, where("email", "==", email)));
+
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        localStorage.setItem('docRefToken', doc.id);
+      } else {
+        console.log(`No se encontró ningún usuario con el correo electrónico ${email}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
 }
 
