@@ -25,6 +25,11 @@ const routes: Routes = [
         canActivate: [isLoginGuard]
       },
       {
+        path: 'mis-gatitos',
+        loadChildren: () => import('../Mis-gatitos/mis-gatitos.module').then( m => m.MisGatitosPageModule),
+        canActivate: [isLoginGuard]
+      },
+      {
         path: '',
         redirectTo: '/tabs/login',
         pathMatch: 'full'

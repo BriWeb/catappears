@@ -30,6 +30,7 @@ export class UsersService {
     try {
       await signOut(this.auth);
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('docRefToken');
       this.router.navigate(['/tabs/login']);
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
@@ -68,12 +69,13 @@ export class UsersService {
       // const esta = this.auth.authStateReady();
       const userCredential = await signInWithEmailAndPassword(this.auth, username, password);
       const {user} = userCredential;
-      await this.getDocByEmail(user.email);
-
+      
       const token = await user.getIdToken();
       localStorage.setItem('accessToken', token);
 
-      const result = {
+      await this.getDocByAccount(user.email);
+
+      result = {
         ret: true,
         token: token
       }
@@ -100,6 +102,16 @@ export class UsersService {
         email: userCredential.user.email,
         creationTime : userCredential.user.metadata.creationTime,
         lastLoginAt : userCredential.user.metadata.lastLoginAt,
+        cats: [
+          {
+            city: '',
+            description: '',
+            location: '',
+            name: '',
+            photo: '',
+            qr: ''
+          },
+        ]
       });
 
       return docRef;
@@ -122,6 +134,10 @@ export class UsersService {
   }
 
   async getUserCollection() {
+    let result = {
+      ret: false,
+      data: []
+    };
     try {
       const userDocRef = localStorage.getItem('docRefToken');
       if(userDocRef){
@@ -129,18 +145,29 @@ export class UsersService {
         const userDocSnapshot = await getDoc(userRef);
         if (userDocSnapshot.exists()) {
           const userData = userDocSnapshot.data();
-          console.log(userData);
+          result = {
+            ret: true,
+            data: userData['cats']
+          };
         } else {
-          console.log(`El usuario con ID ${userDocRef} no existe.`);
+          result = {
+            ret: false,
+            data: []
+          };
         }
       }
+      return result;
   
     } catch (error) {
-      console.error("Error:", error);
+      result = {
+        ret: false,
+        data: []
+      }
+      return result;
     }
   }
 
-  async getDocByEmail(email : string | null) {
+  async getDocByAccount(email : string | null) {
     try {
       const usersCollectionRef = collection(this.db, "users");
       const querySnapshot = await getDocs(query(usersCollectionRef, where("email", "==", email)));

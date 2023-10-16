@@ -1,4 +1,4 @@
-import { Component, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ViewChild} from '@angular/core';
 import { IonInput, IonModal } from '@ionic/angular';
 import {UsersService} from '../services/users.service';
 
@@ -8,7 +8,7 @@ import {UsersService} from '../services/users.service';
   styleUrls: ['login.page.scss']
 })
 
-export class LoginPage {
+export class LoginPage{
   
   constructor(private servicio: UsersService) {}
 
@@ -24,7 +24,6 @@ export class LoginPage {
   };
   showPassword = false;
   error: string = '';
-  count: Number = 1;
  
   @ViewChild(IonModal) modal: IonModal | undefined;
 
@@ -55,9 +54,15 @@ export class LoginPage {
     this.setError();
   }
 
+  setSignInToEmpty(){
+    this.signIn.pass = '';
+    this.signIn.user = '';
+  }
+
   setError(message: string = ''){
     this.error = message;
   }
+  
   async handleSignUp(){
     try {
       this.showLoading();
@@ -70,9 +75,9 @@ export class LoginPage {
         this.setError(data);
         return;
       }
-      this.modal?.dismiss();
-      this.signUp.pass = '';
-      this.signUp.user = '';
+
+      this.closeModal();
+      this.setSignInToEmpty();
 
     } catch (error: any) {
       this.setError(error);
@@ -96,7 +101,6 @@ export class LoginPage {
 
       this.signIn.pass = '';
       this.signIn.user = '';
-      this.modal?.dismiss();
 
     } catch (error: any) {
       this.setError(error);

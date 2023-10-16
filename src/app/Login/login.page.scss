@@ -108,6 +108,10 @@ ion-item{
 //   --color: white;
 // }
 
+.input-clear-icon{
+  tabindex: -1;
+}
+
 @media screen and (min-height: 300px) {
   .login{
     gap: 40px;
