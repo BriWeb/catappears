@@ -11,7 +11,7 @@ export class MisGatitosPage implements OnInit {
   constructor(private servicio: UsersService) { 
   }
 
-  gatitos: Array<object> = [];
+  gatitos: Array<any> = [];
 
   ngOnInit() {
     this.findGatitos();
