@@ -28,8 +28,6 @@
     <ion-card-subtitle id="subtitle">{{ gato.age > 1 ? gato.age + ' años': gato.age + ' año'}} </ion-card-subtitle>
     <p>{{ gato.description.length > maxCaracteres ? gato.description.slice(0, maxCaracteres) + '...' : gato.description }}</p>
     <p>{{gato.city}}</p>
-    <p>{{gato.location}}</p>
-    <p>{{gato.qr}}</p>
 </ion-card-content>
     <ion-button  expand="full" color="tertiary" id="boton-ver" (click)="mostrarMas()" >Ver más</ion-button>
 </ion-card>
