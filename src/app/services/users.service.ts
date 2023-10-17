@@ -122,14 +122,34 @@ export class UsersService {
   }
 
   async getAllUserCollection(){
+    let result;
     try {
       const querySnapshot = await getDocs(collection(this.db, "users"));
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          console.log(`${doc.id} => ` + JSON.stringify(data));
+
+      let allData: any[] = [];
+      querySnapshot.forEach((doc) => {
+        let cats = doc.data()['cats'];
+        // console.log(cats);
+        for(let cat in cats){
+          allData = [...allData, cats[cat]]
+
+        }
+        
       });
+      console.log(allData);
+
+      result = {
+        ret: true,
+        data: allData
+      }
+
+      return result;
     } catch (error) {
-      console.log(error);
+      result = {
+        ret: false,
+        data: []
+      }
+      return result;
     }
   }
 

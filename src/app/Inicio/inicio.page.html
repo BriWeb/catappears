@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
       Inicio
@@ -13,4 +13,19 @@
     </ion-toolbar>
   </ion-header>
 
+</ion-content> -->
+
+<ion-content >
+  <!-- <app-var-cat></app-var-cat> -->
+  <ion-card *ngFor="let item of gatitos">
+    <img class="icat" alt="Silhouette of mountains" src="{{item.photo}}" />
+    <ion-card-header>
+      <ion-card-title>{{ item.name }} </ion-card-title>
+      <ion-card-subtitle>{{ item.location }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{ item.description }}
+    </ion-card-content>
+  </ion-card>
 </ion-content>
