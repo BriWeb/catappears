@@ -12,6 +12,7 @@ export class MisGatitosPage implements OnInit {
   }
 
   gatitos: Array<any> = [];
+  maxCaracteres: number = 100;
 
   ngOnInit() {
     this.findGatitos();
@@ -28,5 +29,9 @@ export class MisGatitosPage implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  mostrarMas(){
+    
   }
 }
