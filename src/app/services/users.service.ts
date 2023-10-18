@@ -105,11 +105,13 @@ export class UsersService {
         cats: [
           {
             city: '',
-            description: '',
+            description: 'Sin descripción',
             location: '',
             name: '',
             photo: '',
-            qr: ''
+            qr: '',
+            lost: false,
+            age: 0
           },
         ]
       });
@@ -136,7 +138,10 @@ export class UsersService {
         }
         
       });
-      console.log(allData);
+      
+      console.log("data vieja: ", allData);
+      /*let dataFormated = */this.formatPhoto(allData);
+      // console.log("data formateada: ", dataFormated);
 
       result = {
         ret: true,
@@ -165,6 +170,7 @@ export class UsersService {
         const userDocSnapshot = await getDoc(userRef);
         if (userDocSnapshot.exists()) {
           const userData = userDocSnapshot.data();
+          this.formatPhoto(userData['cats']);
           result = {
             ret: true,
             data: userData['cats']
@@ -201,6 +207,25 @@ export class UsersService {
     } catch (error) {
       console.error("Error:", error);
     }
+  }
+
+  formatPhoto(data : Array<any>){
+    for(let i = 0; i<data.length;i++){
+      let photo = data[i]['photo'];
+      if(photo != ''){
+        photo = this.getIdPhoto(photo);
+        data[i]['photo'] = photo;
+      }
+    }
+    // return data;
+  }
+
+  getIdPhoto(enlace : string){
+    let id = enlace.match(/\/d\/(.*?)\/view/);
+    if (id && id.length > 1) {
+      enlace = environment.DRIVE_URL + id[1];
+    }
+    return enlace; 
   }
 
 }

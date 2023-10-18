@@ -122,6 +122,7 @@ export const environment = {
     "auth/invalid-req-type": "Tipo de solicitud no válido",
   },
   FACE_APP_ID : 1372240503720494,
+  DRIVE_URL: "https://drive.google.com/uc?export=download&id="
 };
 
 /*

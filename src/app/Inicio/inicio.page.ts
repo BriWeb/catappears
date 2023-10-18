@@ -11,7 +11,8 @@ export class InicioPage implements OnInit{
   constructor(private servicio: UsersService) { }
 
   gatitos : Array<any> = [];
-
+  maxCaracteres: number = 100;
+  
   ngOnInit() {
     this.getAllGatitos();
   }
@@ -20,8 +21,13 @@ export class InicioPage implements OnInit{
     try {
       const result = await this.servicio.getAllUserCollection()
       this.gatitos = result.data;
+      console.log("gatitos: ", result);
     } catch (error) {
-      
+      console.log(error);
     }
+  }
+
+  mostrarMas(){
+    
   }
 }
