@@ -7,13 +7,17 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { PerfilPageRoutingModule } from './perfil-routing.module';
 
+import { QRCodeModule } from 'angularx-qrcode';
+
+
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    PerfilPageRoutingModule
+    PerfilPageRoutingModule,
+    QRCodeModule
   ],
   declarations: [PerfilPage]
 })

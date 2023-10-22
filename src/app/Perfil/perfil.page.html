@@ -1,8 +1,33 @@
-<ion-content [fullscreen]="true">
+<!-- <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="url" [width]="256" [errorCorrectionLevel]="'L'"></qrcode>
+
+  <a [href]="sanitizedUrl" download="qrcode">Download</a>
+
+
+
+</ion-content> -->
+
+<ion-content class="ion-padding">
+  <!-- Imagen de perfil -->
+  <div class="perfil-image-container">
+    <img src="https://i.pinimg.com/originals/ba/79/c7/ba79c7805f625367f33bd634be332d33.jpg" alt="Imagen de perfil"
+      class="perfil-image">
+  </div>
+
+  <!-- Botones -->
+  <ion-button expand="full">Postear</ion-button>
+  <ion-button expand="full">Mis Gatitos</ion-button>
+  <ion-fab id="icon-log-out">
+    <ion-button  expand="full">SESION</ion-button>
+  </ion-fab>
+
+  <ion-alert trigger="icon-log-out" header="¿Desea cerrar sesión?" [buttons]="alertButtons"
+  (didDismiss)="setResult($event)"></ion-alert>
 
 </ion-content>

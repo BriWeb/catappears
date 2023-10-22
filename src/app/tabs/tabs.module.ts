@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
-import {LogoutComponent} from '../components/logout/logout.component';
+// import {LogoutComponent} from '../components/logout/logout.component';
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import {LogoutComponent} from '../components/logout/logout.component';
     FormsModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage, LogoutComponent]
+  declarations: [TabsPage/*, LogoutComponent*/]
 })
 export class TabsPageModule {}

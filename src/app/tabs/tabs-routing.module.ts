@@ -4,7 +4,6 @@ import { TabsPage } from './tabs.page';
 import { isLoginGuard } from '../guards/isLogin.guard';
 import { isLogoutGuard } from '../guards/isLogout.guard';
 
-
 const routes: Routes = [
   {
     path: 'tabs',
