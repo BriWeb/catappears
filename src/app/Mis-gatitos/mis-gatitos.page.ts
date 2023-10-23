@@ -34,4 +34,28 @@ export class MisGatitosPage implements OnInit {
   mostrarMas(){
     
   }
+
+  // Alerta de eliminar a un gatito
+    public alertButtons = [
+      {
+        text: 'Cancelar',
+        cssClass: 'alert-button-cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Alert canceled');
+        },
+      },
+      {
+        text: 'Confirmar',
+        cssClass: 'alert-button-confirm',
+        role: 'confirm',
+        handler: () => {
+          console.log('Alert confirmed');
+        },
+      },
+    ];
+
+    setResult(ev: any) {
+      console.log(`Dismissed with role: ${ev.detail.role}`);
+    }
 }

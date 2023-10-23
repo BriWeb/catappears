@@ -1,6 +1,10 @@
+:root {
+    --ion-color-success: #08937c;
+  }
+
 #header{
-    background-image: url(https://static.vecteezy.com/system/resources/previews/009/262/228/non_2x/cat-paws-black-and-white-background-flat-design-cute-cat-paws-wallpaper-illustration-vector.jpg);
-    background-repeat: repeat;
+    height: 76px;
+    display: flex;
 }
 #title{
     font-weight:900;
@@ -14,10 +18,41 @@
     max-height: 100%; 
 }
 
+//Modifica los estilos del card
 #boton-ver{
-        width: 100%;
-        height: 100%;
-       
+        width: 50%;
+        height: 100%;  
         color: black;
 }
 
+#contenedor-botones{
+    display: flex;
+}
+
+#contenedor-close{
+    display: flex;
+    justify-content: flex-end;
+}
+#header-title{
+    font-weight:900;
+    height: 76px;
+}
+#toolbar{
+    height: 76px;
+}
+
+.large-icon {
+    font-size: 2rem; /* Cambia el valor según tus necesidades */
+    opacity: 0.5  
+}
+
+  .boton-superpuesto {
+    /* Estilos para el botón que estará encima */
+    position: absolute;
+    z-index: 2; /* Ajusta el valor de z-index según tus necesidades para superponer correctamente */
+    opacity: 0.6; /* Ajusta la posición izquierda según tus necesidades */
+    height: 36px;
+  }
+
+
+  
