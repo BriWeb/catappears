@@ -48,7 +48,7 @@ export class UsersService {
         data: user
       }
 
-      const docRef = await this.createUserCollection(userCredential);
+      await this.createUserCollection(userCredential);
       
       return result;
       
@@ -92,34 +92,68 @@ export class UsersService {
     }
   }
 
-  async createUserCollection(userCredential: any) {
-    try {
-  
-      const docRef = await addDoc(collection(this.db, "users"), {
-        uid : userCredential.user.uid,
-        first: "",
-        last: "",
-        email: userCredential.user.email,
-        creationTime : userCredential.user.metadata.creationTime,
-        lastLoginAt : userCredential.user.metadata.lastLoginAt,
-        cats: [
-          {
-            city: '',
-            description: 'Sin descripción',
-            location: '',
-            name: '',
-            photo: '',
-            qr: '',
-            lost: false,
-            age: 0
-          },
-        ]
-      });
+      // {
+      //   uid : userCredential.user.uid,
+      //   first: "",
+      //   last: "",
+      //   email: userCredential.user.email,
+      //   creationTime : userCredential.user.metadata.creationTime,
+      //   lastLoginAt : userCredential.user.metadata.lastLoginAt,
+      //   cats: [
+      //     {
+      //       city: '',
+      //       description: 'Sin descripción',
+      //       location: '',
+      //       name: '',
+      //       photo: '',
+      //       qr: '',
+      //       lost: false,
+      //       age: 0
+      //     },
+      //   ]
+      // }
 
-      return docRef;
+  async createUserCollection(userCredential: any) {
+    const newUser = {
+      uid : userCredential.user.uid,
+      first: "",
+      last: "",
+      email: userCredential.user.email,
+      creationTime : userCredential.user.metadata.creationTime,
+      lastLoginAt : userCredential.user.metadata.lastLoginAt
+    };
+
+    try {
+      await addDoc(collection(this.db, "users"), newUser);
+
+      // await this.createCatColecction();
     } catch (error) {
       console.error('Error al crear la colección de usuario', error);
-      return error;
+    }
+  }
+
+  async createCatColecction(cat : any){
+    try {
+      const userDocRef = localStorage.getItem('docRefToken');
+  
+      if(userDocRef){
+        const newCat = {
+          city: cat.city ? cat.city : "Sin descripción",
+          description: cat.description ? cat.description : "Sin descripción",
+          location: cat.location ? cat.location : "Sin ubicación",
+          name: cat.name ? cat.name : "Sin nombre",
+          photo: cat.photo ? cat.photo : "Sin foto",
+          qr: cat.qr ? cat.qr : "Sin QR",
+          lost: cat.lost ? cat.lost : false,
+          age: cat.age ? cat.age : 0,
+        };
+        const userRef = doc(this.db, "users", userDocRef);
+        const catsCollectionRef = collection(userRef, "cats");
+        await addDoc(catsCollectionRef, newCat);
+
+      }
+    } catch (error) {
+      console.log("Error al crear un gatito.");
     }
   }
 
