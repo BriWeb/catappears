@@ -19,12 +19,14 @@ export class RegGatitoPage implements OnInit {
 
   constructor(private servicio: UsersService) { }
 
-  enviardatos() {
-    const result = this.servicio.getCatito(this.catito)
-    this.verificarCamposCompletos()
-    console.log(result)
-    this.limpiarCampos()
-  }
+
+  // funcion para subir gato (agregar funcion al ts)
+  // enviardatos() {
+  //   const result = this.servicio.????(this.catito)
+  //   this.verificarCamposCompletos()
+  //   console.log(result)
+  //   this.limpiarCampos()
+  // }
 
   verificarCamposCompletos() {
     this.camposCompletos = !!(this.catito.nombre && this.catito.ubicacion && this.catito.detalle && this.catito.img);
