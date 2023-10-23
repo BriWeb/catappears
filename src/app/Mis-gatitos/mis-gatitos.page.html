@@ -13,13 +13,14 @@
 </ion-content> -->
 
 <!--HEADER DE MIS GATITOS-->
- <ion-header [translucent]="true" id="header">
+<ion-header [translucent]="true" id="header">
   <ion-toolbar>
     <ion-title>Mis mascotas</ion-title>
   </ion-toolbar>
-</ion-header> 
+</ion-header>
 
 <!--CARDS-->
+<<<<<<< HEAD
 <ion-content [fullscreen]="true" >
 <ion-card *ngFor="let gato of gatitos" id="contenedor"> 
    <ion-img alt="Foto de su mascota" [src]= gato.photo id="img"></ion-img>  
@@ -34,3 +35,50 @@
 
 </ion-card>
 </ion-content>
+=======
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let gato of gatitos" id="contenedor">
+    <div id="contenedor-close">
+      <ion-button id="present-alert" color="light" class="boton-superpuesto">
+        <ion-icon name="close-outline" class="large-icon"></ion-icon>
+      </ion-button>
+      <ion-alert
+        trigger="present-alert"
+        class="custom-alert"
+        header="¿Está seguro de eliminar?"
+        [buttons]="alertButtons"
+      ></ion-alert>
+    </div>
+
+    <ion-img alt="Foto de su mascota" [src]="gato.photo" id="img"></ion-img>
+
+    <ion-card-content>
+      <ion-card-title id="title">{{ gato.name }}</ion-card-title>
+      <ion-card-subtitle id="subtitle"
+        >{{ gato.age > 1 ? gato.age + ' años': gato.age + ' año'}}
+      </ion-card-subtitle>
+      <p>
+        {{ gato.description.length > maxCaracteres ? gato.description.slice(0,
+        maxCaracteres) + '...' : gato.description }}
+      </p>
+      <p>{{gato.city}}</p>
+    </ion-card-content>
+    <div id="contenedor-botones">
+      <ion-button
+        expand="full"
+        color="primary"
+        id="boton-ver"
+        (click)="mostrarMas()"
+        >Ver más</ion-button
+      >
+      <ion-button
+        expand="full"
+        color="secondary"
+        id="boton-ver"
+        (click)="mostrarMas()"
+        >Editar</ion-button
+      >
+    </div>
+  </ion-card>
+</ion-content>
+>>>>>>> 181fce13619c6b5289426c9f2e0cc60c8ff6aed0

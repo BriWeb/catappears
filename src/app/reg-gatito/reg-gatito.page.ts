@@ -19,6 +19,7 @@ export class RegGatitoPage implements OnInit {
 
   constructor(private servicio: UsersService) { }
 
+<<<<<<< HEAD
 
   // funcion para subir gato (agregar funcion al ts)
   // enviardatos() {
@@ -27,16 +28,24 @@ export class RegGatitoPage implements OnInit {
   //   console.log(result)
   //   this.limpiarCampos()
   // }
+=======
+  enviardatos() {
+    // const result = this.servicio.getCatito(this.catito)  
+    // this.verificarCamposCompletos()
+    // console.log(result)
+    // this.limpiarCampos()
+  }
+>>>>>>> 181fce13619c6b5289426c9f2e0cc60c8ff6aed0
 
   verificarCamposCompletos() {
-    this.camposCompletos = !!(this.catito.nombre && this.catito.ubicacion && this.catito.detalle && this.catito.img);
+    // this.camposCompletos = !!(this.catito.nombre && this.catito.ubicacion && this.catito.detalle && this.catito.img);
   }
 
   limpiarCampos() {
-    this.catito.nombre = '';
-    this.catito.ubicacion = '';
-    this.catito.detalle = '';
-    this.catito.img = "";
+    // this.catito.nombre = '';
+    // this.catito.ubicacion = '';
+    // this.catito.detalle = '';
+    // this.catito.img = "";
   }
 
   ngOnInit() { }
