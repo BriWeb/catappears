@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
+import { QRCodeModule } from 'angularx-qrcode';
 // import {LogoutComponent} from '../components/logout/logout.component';
 
 @NgModule({
@@ -13,7 +14,8 @@ import { TabsPage } from './tabs.page';
     IonicModule,
     CommonModule,
     FormsModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
+    QRCodeModule
   ],
   declarations: [TabsPage/*, LogoutComponent*/]
 })

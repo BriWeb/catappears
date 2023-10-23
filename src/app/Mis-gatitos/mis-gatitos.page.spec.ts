@@ -5,7 +5,7 @@ describe('MisGatitosPage', () => {
   let component: MisGatitosPage;
   let fixture: ComponentFixture<MisGatitosPage>;
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     fixture = TestBed.createComponent(MisGatitosPage);
     component = fixture.componentInstance;
     fixture.detectChanges();

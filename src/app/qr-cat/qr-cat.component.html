@@ -1,0 +1,5 @@
+
+<ion-button (click)="onChangeURL($event)" expand="full" color="tertiary" id="boton-descargar">Descargar QR</ion-button>
+
+<input [(ngModel)]="qrdata" type="text" placeholder="Ingresa el valor" />
+<qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qrdata"></qrcode>
