@@ -1,0 +1,36 @@
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input [(ngModel)]="catito.nombre" type="text" placeholder="Nombre"
+        (input)="verificarCamposCompletos()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ubicacion</ion-label>
+      <ion-input [(ngModel)]="catito.ubicacion" type="text" placeholder="Ubicacion"
+        (input)="verificarCamposCompletos()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Detalle</ion-label>
+      <ion-input [(ngModel)]="catito.detalle" type="text" placeholder="Detalle"
+        (input)="verificarCamposCompletos()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">img</ion-label>
+      <ion-input [(ngModel)]="catito.img" type="text" placeholder="Img"
+        (input)="verificarCamposCompletos()"></ion-input>
+    </ion-item>
+
+    <ion-button (click)="enviardatos()" expand="full" [disabled]="!camposCompletos">Postear</ion-button>
+    <ion-button (click)="limpiarCampos()" rows="5" expand="full">Borrar</ion-button>
+
+  </ion-list>
+
+  <div style="text-align: center; padding: 10px;">
+    Gracias a <span style="color: rgb(0, 255, 0);">ChatGPT</span> por todo
+  </div>
+
+</ion-content>
