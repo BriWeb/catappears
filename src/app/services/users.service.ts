@@ -158,6 +158,9 @@ export class UsersService {
     }
   }
 
+  async updateCatCollection(){
+    
+  }
   async getAllUserCollection(){
     let result;
     try {

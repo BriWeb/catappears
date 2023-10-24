@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MisGatitosPageRoutingModule } from './mis-gatitos-routing.module';
 
 import { MisGatitosPage } from './mis-gatitos.page';
-import { QrCatComponent } from '../qr-cat/qr-cat.component';
+import { QrCatComponent } from '../components/qr-cat/qr-cat.component';
 import { QRCodeModule } from 'angularx-qrcode';
 
 
@@ -21,6 +21,6 @@ import { QRCodeModule } from 'angularx-qrcode';
     MisGatitosPageRoutingModule,
     QRCodeModule
   ],
-  declarations: [MisGatitosPage,QrCatComponent]
+  declarations: [MisGatitosPage, QrCatComponent]
 })
 export class MisGatitosPageModule {}

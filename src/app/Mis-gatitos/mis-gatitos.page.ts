@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-mis-gatitos',
@@ -8,11 +9,12 @@ import { UsersService } from '../services/users.service';
 })
 export class MisGatitosPage implements OnInit {
 
-  constructor(private servicio: UsersService) { 
+  constructor(private servicio: UsersService, private sanitizer: DomSanitizer) { 
   }
 
-  gatitos: Array<any> = [];
+  cats: Array<any> = [];
   maxCaracteres: number = 100;
+
 
   ngOnInit() {
     this.findGatitos();
@@ -22,7 +24,7 @@ export class MisGatitosPage implements OnInit {
     try {
       const result = await this.servicio.getUserCollection();
       if(result.ret){
-        this.gatitos = result.data;
+        this.cats = result.data;
       } else {
         console.log("No trajo datos");
       }
@@ -30,7 +32,7 @@ export class MisGatitosPage implements OnInit {
       console.log(error);
     }
   }
-
+  
   mostrarMas(){
     
   }

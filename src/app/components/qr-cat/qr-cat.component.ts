@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
@@ -6,9 +6,11 @@ import { SafeUrl } from '@angular/platform-browser';
   templateUrl: './qr-cat.component.html',
   styleUrls: ['./qr-cat.component.scss'],
 })
-export class QrCatComponent {
+export class QrCatComponent{
 
-  public qrdata: string = '123123123';
+  @Input() qrcode: string = '';
+  @Input() qrname: string = ''; 
+  
   public qrCodeDownloadLink: SafeUrl = "";
   
   constructor () {
@@ -17,4 +19,5 @@ export class QrCatComponent {
   onChangeURL(url: SafeUrl) {
     this.qrCodeDownloadLink = url;
   }
+
 }

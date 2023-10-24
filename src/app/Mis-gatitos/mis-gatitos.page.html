@@ -37,31 +37,31 @@
 </ion-content>
 ======= -->
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let gato of gatitos" id="contenedor">
+  <ion-card *ngFor="let cat of cats" id="contenedor">
     <div id="contenedor-close">
-      <ion-button [id]="gato.name" color="light" class="boton-superpuesto">
+      <ion-button [id]="cat.name" color="light" class="boton-superpuesto">
         <ion-icon name="close-outline" class="large-icon"></ion-icon>
       </ion-button>
       <ion-alert
-        [trigger]="gato.name"
+        [trigger]="cat.name"
         class="custom-alert"
         header="¿Está seguro de eliminar?"
         [buttons]="alertButtons"
       ></ion-alert>
     </div>
 
-    <ion-img alt="Foto de su mascota" [src]="gato.photo" id="img"></ion-img>
+    <ion-img alt="Foto de su mascota" [src]="cat.photo" id="img"></ion-img>
 
     <ion-card-content>
-      <ion-card-title id="title">{{ gato.name }}</ion-card-title>
+      <ion-card-title id="title">{{ cat.name }}</ion-card-title>
       <ion-card-subtitle id="subtitle"
-        >{{ gato.age > 1 ? gato.age + ' años': gato.age + ' año'}}
+        >{{ cat.age > 1 ? cat.age + ' años': cat.age + ' año'}}
       </ion-card-subtitle>
       <p>
-        {{ gato.description.length > maxCaracteres ? gato.description.slice(0,
-        maxCaracteres) + '...' : gato.description }}
+        {{ cat.description.length > maxCaracteres ? cat.description.slice(0,
+        maxCaracteres) + '...' : cat.description }}
       </p>
-      <p>{{gato.city}}</p>
+      <p>{{cat.city}}</p>
     </ion-card-content>
     <div id="contenedor-botones">
       <ion-button
@@ -71,6 +71,8 @@
         (click)="mostrarMas()"
         >Ver más</ion-button
       >
+      <app-qr-cat [qrcode]="cat.qr" [qrname]="cat.name"></app-qr-cat>
+
       <ion-button
         expand="full"
         color="secondary"
@@ -78,6 +80,14 @@
         (click)="mostrarMas()"
         >Editar</ion-button
       >
+      <!-- <ion-button
+        expand="full"
+        color="secondary"
+        id="boton-ver"
+        (click)="mostrarMas()"
+        ><a [href]="qrCodeDownloadLink" download="qrcode">Descargar QR</a></ion-button
+      > -->
+      
     </div>
   </ion-card>
 </ion-content>
