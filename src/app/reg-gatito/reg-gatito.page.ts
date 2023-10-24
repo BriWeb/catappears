@@ -7,47 +7,55 @@ import { UsersService } from '../services/users.service';
   styleUrls: ['./reg-gatito.page.scss'],
 })
 export class RegGatitoPage implements OnInit {
-
-  camposCompletos: boolean = false;
-
-  catito = {
-    nombre: "",
-    ubicacion: "",
-    detalle: "",
-    img: "",
-  }
-
+  
   constructor(private servicio: UsersService) { }
+  
+  cat = {
+    city: '',
+    description: '',
+    location: '',
+    name: '',
+    photo: '',
+    lost: false,
+    age: ''
+  };
 
-<<<<<<< HEAD
+  ngOnInit() { }
 
-  // funcion para subir gato (agregar funcion al ts)
-  // enviardatos() {
-  //   const result = this.servicio.????(this.catito)
-  //   this.verificarCamposCompletos()
-  //   console.log(result)
-  //   this.limpiarCampos()
-  // }
-=======
-  enviardatos() {
-    // const result = this.servicio.getCatito(this.catito)  
-    // this.verificarCamposCompletos()
-    // console.log(result)
-    // this.limpiarCampos()
+  async handlePost(e : Event) {
+    e.preventDefault();
+    try {
+      if(this.verificarCamposCompletos()){
+        const cat_id = await this.servicio.createCatColecction(this.cat);  
+        if(cat_id){
+          this.limpiarCampos();
+          console.log("gato creado exitosamente con el id: ", cat_id.id);
+        } else {
+          console.log("Error al crear el gatito");
+        }
+      } else {
+        console.log("Debe completar todos los campos");
+      }
+      
+    } catch (error) {
+      console.log("Error al crear el gatito");
+    }
   }
->>>>>>> 181fce13619c6b5289426c9f2e0cc60c8ff6aed0
 
   verificarCamposCompletos() {
-    // this.camposCompletos = !!(this.catito.nombre && this.catito.ubicacion && this.catito.detalle && this.catito.img);
+    return !!(this.cat.city && this.cat.description && this.cat.location && this.cat.name && this.cat.photo && this.cat.age);
   }
 
   limpiarCampos() {
-    // this.catito.nombre = '';
-    // this.catito.ubicacion = '';
-    // this.catito.detalle = '';
-    // this.catito.img = "";
+    this.cat.city = '';
+    this.cat.description = '';
+    this.cat.location = '';
+    this.cat.name = '';
+    this.cat.photo = '';
+    this.cat.lost = false;
+    this.cat.age = '';
   }
 
-  ngOnInit() { }
+
 
 }

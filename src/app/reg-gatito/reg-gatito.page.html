@@ -1,36 +1,37 @@
 <ion-content padding>
-  <ion-list>
+  <form (submit)="handlePost($event)">
     <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input [(ngModel)]="catito.nombre" type="text" placeholder="Nombre"
-        (input)="verificarCamposCompletos()"></ion-input>
+      <ion-input [(ngModel)]="cat.name" label="Nombre" labelPlacement="floating" type="text" placeholder="Nombre" (input)="verificarCamposCompletos()" name="name"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Ubicacion</ion-label>
-      <ion-input [(ngModel)]="catito.ubicacion" type="text" placeholder="Ubicacion"
-        (input)="verificarCamposCompletos()"></ion-input>
+      <ion-input [(ngModel)]="cat.age" label="Edad" labelPlacement="floating" type="number" placeholder="Edad" (input)="verificarCamposCompletos()" name="age"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Detalle</ion-label>
-      <ion-input [(ngModel)]="catito.detalle" type="text" placeholder="Detalle"
-        (input)="verificarCamposCompletos()"></ion-input>
+      <ion-input [(ngModel)]="cat.city" label="Ciudad" labelPlacement="floating" type="text" placeholder="Ciudad" (input)="verificarCamposCompletos()" name="city"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">img</ion-label>
-      <ion-input [(ngModel)]="catito.img" type="text" placeholder="Img"
-        (input)="verificarCamposCompletos()"></ion-input>
+      <ion-input [(ngModel)]="cat.location" label="Localidad" labelPlacement="floating" type="text" placeholder="Localidad" (input)="verificarCamposCompletos()" name="location"></ion-input>
     </ion-item>
 
-    <ion-button  expand="full" [disabled]="!camposCompletos">Postear</ion-button>
+    <ion-item>
+      <ion-input [(ngModel)]="cat.description" label="Descripcion" labelPlacement="floating" type="text" placeholder="Descripcion" (input)="verificarCamposCompletos()" name="description"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input [(ngModel)]="cat.photo" label="Foto" labelPlacement="floating" type="text" placeholder="Foto" (input)="verificarCamposCompletos()" name="photo"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-checkbox [(ngModel)]="cat.lost" (input)="verificarCamposCompletos()" name="lost" ></ion-checkbox>
+      <ion-label slot="start">Perdido</ion-label>
+    </ion-item>
+
+    <ion-button expand="full" type="submit">Postear</ion-button>
     <ion-button (click)="limpiarCampos()" rows="5" expand="full">Borrar</ion-button>
 
-  </ion-list>
-
-  <div style="text-align: center; padding: 10px;">
-    Gracias a <span style="color: rgb(0, 255, 0);">ChatGPT</span> por todo
-  </div>
+  </form>
 
 </ion-content>

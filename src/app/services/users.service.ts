@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 // ejecutar npm install firebase
 import { initializeApp } from 'firebase/app';
 import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, FacebookAuthProvider } from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, updateDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { Router } from "@angular/router";
 
@@ -138,23 +138,23 @@ export class UsersService {
       const userDocRef = localStorage.getItem('docRefToken');
   
       if(userDocRef){
-        const newCat = {
-          city: cat.city ? cat.city : "Sin descripción",
-          description: cat.description ? cat.description : "Sin descripción",
-          location: cat.location ? cat.location : "Sin ubicación",
-          name: cat.name ? cat.name : "Sin nombre",
-          photo: cat.photo ? cat.photo : "Sin foto",
-          qr: cat.qr ? cat.qr : "Sin QR",
-          lost: cat.lost ? cat.lost : false,
-          age: cat.age ? cat.age : 0,
-        };
+        cat.qr = '';
         const userRef = doc(this.db, "users", userDocRef);
         const catsCollectionRef = collection(userRef, "cats");
-        await addDoc(catsCollectionRef, newCat);
+        const docRef = await addDoc(catsCollectionRef, cat);
+        
+        const qr = 'app://catappears/tabs/gatito-perdido/' + userDocRef + '/' + docRef.id;
 
+        await updateDoc(doc(catsCollectionRef, docRef.id), {
+          qr,
+        });
+        
+        return docRef;
       }
+      return null;
     } catch (error) {
       console.log("Error al crear un gatito.");
+      return null;
     }
   }
 

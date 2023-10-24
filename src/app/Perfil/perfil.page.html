@@ -22,10 +22,10 @@
 
   <!-- Botones -->
   <ion-button expand="full" routerLink="../mis-gatitos">Mis gatitos</ion-button>
-  <ion-button expand="full" routerLink="../reg-gatito">Postear</ion-button>
-  <ion-fab id="icon-log-out">
-    <ion-button  expand="full">SESION</ion-button>
-  </ion-fab>
+  <ion-button expand="full" routerLink="../reg-gatito">Agregar un gato</ion-button>
+  <!-- <ion-fab id="icon-log-out" expand="full"> -->
+  <ion-button expand="full" id="icon-log-out">Cerrar Sesión</ion-button>
+  <!-- </ion-fab> -->
 
   <ion-alert trigger="icon-log-out" header="¿Desea cerrar sesión?" [buttons]="alertButtons"
   (didDismiss)="setResult($event)"></ion-alert>
