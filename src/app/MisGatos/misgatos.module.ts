@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MisGatitosPageRoutingModule } from './mis-gatitos-routing.module';
+import { MisGatosPageRoutingModule } from './misgatos-routing.module';
 
-import { MisGatitosPage } from './mis-gatitos.page';
+import { MisGatosPage } from './misgatos.page';
 import { QrCatComponent } from '../components/qr-cat/qr-cat.component';
 import { QRCodeModule } from 'angularx-qrcode';
 
@@ -16,9 +16,9 @@ import { QRCodeModule } from 'angularx-qrcode';
     CommonModule,
     FormsModule,
     IonicModule,
-    MisGatitosPageRoutingModule,
+    MisGatosPageRoutingModule,
     QRCodeModule
   ],
-  declarations: [MisGatitosPage, QrCatComponent]
+  declarations: [MisGatosPage, QrCatComponent]
 })
-export class MisGatitosPageModule {}
+export class MisGatosPageModule {}

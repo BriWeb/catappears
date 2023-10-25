@@ -3,11 +3,11 @@ import { UsersService } from '../services/users.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-mis-gatitos',
-  templateUrl: './mis-gatitos.page.html',
-  styleUrls: ['./mis-gatitos.page.scss'],
+  selector: 'MisGatosPage',
+  templateUrl: './misgatos.page.html',
+  styleUrls: ['./misgatos.page.scss'],
 })
-export class MisGatitosPage implements OnInit {
+export class MisGatosPage implements OnInit {
 
   constructor(private servicio: UsersService, private sanitizer: DomSanitizer) { 
   }

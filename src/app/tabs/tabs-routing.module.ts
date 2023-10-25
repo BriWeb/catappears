@@ -6,33 +6,33 @@ import { isLogoutGuard } from '../guards/isLogout.guard';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
-        path: 'login',
+        path: 'Login',
         loadChildren: () => import('../Login/login.module').then(m => m.LoginPageModule),
         canActivate: [isLogoutGuard]
       },
       {
-        path: 'inicio',
+        path: 'Inicio',
         loadChildren: () => import('../Inicio/inicio.module').then(m => m.InicioPageModule)
       },
       {
-        path: 'perfil',
+        path: 'Perfil',
         loadChildren: () => import('../Perfil/perfil.module').then(m => m.PerfilPageModule),
         canActivate: [isLoginGuard]
       },
       {
         path: '',
-        redirectTo: '/tabs/login',
+        redirectTo: '/Login',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/login',
+    redirectTo: '/Login',
     pathMatch: 'full'
   }
 ];

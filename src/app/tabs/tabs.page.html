@@ -1,22 +1,20 @@
 <ion-tabs>
 
   <ion-tab-bar slot="bottom" >
-    <ion-tab-button tab="login" href="/tabs/login" *ngIf="!usersService.isLogged()">
+    <ion-tab-button tab="Login" href="/Login" *ngIf="!usersService.isLogged()">
       <ion-icon aria-hidden="true" name="log-in"></ion-icon>
       <ion-label>Login</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="inicio" href="/tabs/inicio">
+    <ion-tab-button tab="Inicio" href="/Inicio">
       <ion-icon aria-hidden="true" name="ellipse"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="perfil" href="/tabs/perfil" *ngIf="usersService.isLogged()" >
+    <ion-tab-button tab="Perfil" href="/Perfil" *ngIf="usersService.isLogged()" >
       <ion-icon aria-hidden="true" name="square"></ion-icon>
       <ion-label>Perfil</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 
 </ion-tabs>
-
-<!-- <app-logout *ngIf="usersService.isLogged()"></app-logout> -->

@@ -2,7 +2,7 @@ import { Component, Input} from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-qr-cat',
+  selector: 'Qr-CatComponent',
   templateUrl: './qr-cat.component.html',
   styleUrls: ['./qr-cat.component.scss'],
 })

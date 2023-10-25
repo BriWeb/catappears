@@ -3,7 +3,7 @@ import { UsersService } from '../services/users.service';
 import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-perfil',
+  selector: 'PerfilPage',
   templateUrl: 'perfil.page.html',
   styleUrls: ['perfil.page.scss']
 })

@@ -1,4 +1,4 @@
-<ion-button routerLink="/tabs/perfil" class="back-to-perfil">
+<ion-button routerLink="/Perfil" class="back-to-perfil">
   <!-- slot="icon-only" -->
   <ion-icon name="arrow-back-circle-sharp"></ion-icon>
 </ion-button>
@@ -44,7 +44,7 @@
         (click)="mostrarMas()"
         >Ver más</ion-button
       >
-      <app-qr-cat [qrcode]="cat.qr" [qrname]="cat.name"></app-qr-cat>
+      <Qr-CatComponent [qrcode]="cat.qr" [qrname]="cat.name"></Qr-CatComponent>
 
       <ion-button
         expand="full"

@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RegGatitoPageRoutingModule } from './reg-gatito-routing.module';
+import { AgregarGatoPageRoutingModule } from './agregargato-routing.module';
 
-import { RegGatitoPage } from './reg-gatito.page';
+import { AgregarGatoPage } from './agregargato.page';
 
 // import { BackToPerfilComponent } from '../components/back-to-perfil/back-to-perfil.component';
 
@@ -15,8 +15,8 @@ import { RegGatitoPage } from './reg-gatito.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RegGatitoPageRoutingModule
+    AgregarGatoPageRoutingModule
   ],
-  declarations: [RegGatitoPage/*,BackToPerfilComponent*/]
+  declarations: [AgregarGatoPage/*,BackToPerfilComponent*/]
 })
-export class RegGatitoPageModule {}
+export class AgregarGatoPageModule {}

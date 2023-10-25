@@ -8,13 +8,13 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'mis-gatitos',
-    loadChildren: () => import('./Mis-gatitos/mis-gatitos.module').then( m => m.MisGatitosPageModule),
+    path: 'MisGatos',
+    loadChildren: () => import('./MisGatos/misgatos.module').then( m => m.MisGatosPageModule),
     canActivate: [isLoginGuard]
   },
   {
-    path: 'reg-gatito',
-    loadChildren: () => import('./reg-gatito/reg-gatito.module').then( m => m.RegGatitoPageModule)
+    path: 'AgregarGato',
+    loadChildren: () => import('./AgregarGato/agregargato.module').then( m => m.AgregarGatoPageModule)
   }
 ];
 @NgModule({

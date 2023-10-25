@@ -32,7 +32,7 @@ export class UsersService {
       await signOut(this.auth);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('docRefToken');
-      this.router.navigate(['/tabs/login']);
+      this.router.navigate(['/Login']);
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
@@ -80,7 +80,7 @@ export class UsersService {
         ret: true,
         token: token
       }
-      this.router.navigate(['/tabs/perfil']);
+      this.router.navigate(['/Perfil']);
       return result;
       
     } catch (error : any) {
@@ -143,7 +143,7 @@ export class UsersService {
         const catsCollectionRef = collection(userRef, "cats");
         const docRef = await addDoc(catsCollectionRef, cat);
         
-        const qr = 'app://catappears/tabs/gatito-perdido/' + userDocRef + '/' + docRef.id;
+        const qr = '/gatito-perdido/' + userDocRef + '/' + docRef.id;
 
         await updateDoc(doc(catsCollectionRef, docRef.id), {
           qr,

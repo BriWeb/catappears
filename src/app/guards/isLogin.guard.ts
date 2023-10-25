@@ -9,7 +9,7 @@ export const isLoginGuard = () => {
     if(usersService.isLogged()){
         return true;
     } else {
-        router.navigate(['/tabs/login']);
+        router.navigate(['/Login']);
         return false;
     }
 }

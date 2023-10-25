@@ -7,7 +7,7 @@ export const isLogoutGuard = () => {
     const usersService = inject(UsersService);
 
     if(usersService.isLogged()){
-        router.navigate(['/tabs/perfil']);
+        router.navigate(['/Perfil']);
         return false;
     } else {
         return true;

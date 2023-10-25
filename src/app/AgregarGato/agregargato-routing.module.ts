@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { MisGatitosPage } from './mis-gatitos.page';
+import { AgregarGatoPage } from './agregargato.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: MisGatitosPage
+    component: AgregarGatoPage,
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class MisGatitosPageRoutingModule {}
+export class AgregarGatoPageRoutingModule {}

@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RegGatitoPage } from './reg-gatito.page';
+import { AgregarGatoPage } from './agregargato.page';
 
-describe('RegGatitoPage', () => {
-  let component: RegGatitoPage;
-  let fixture: ComponentFixture<RegGatitoPage>;
+describe('AgregarGatoPage', () => {
+  let component: AgregarGatoPage;
+  let fixture: ComponentFixture<AgregarGatoPage>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(RegGatitoPage);
+    fixture = TestBed.createComponent(AgregarGatoPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
