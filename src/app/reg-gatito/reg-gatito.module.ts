@@ -8,14 +8,15 @@ import { RegGatitoPageRoutingModule } from './reg-gatito-routing.module';
 
 import { RegGatitoPage } from './reg-gatito.page';
 
+// import { BackToPerfilComponent } from '../components/back-to-perfil/back-to-perfil.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RegGatitoPageRoutingModule,
+    RegGatitoPageRoutingModule
   ],
-  declarations: [RegGatitoPage,]
+  declarations: [RegGatitoPage/*,BackToPerfilComponent*/]
 })
 export class RegGatitoPageModule {}

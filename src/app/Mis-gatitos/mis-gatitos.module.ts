@@ -11,8 +11,6 @@ import { QrCatComponent } from '../components/qr-cat/qr-cat.component';
 import { QRCodeModule } from 'angularx-qrcode';
 
 
-
-
 @NgModule({
   imports: [
     CommonModule,

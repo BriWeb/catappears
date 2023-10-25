@@ -7,7 +7,6 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
 import { QRCodeModule } from 'angularx-qrcode';
-// import {LogoutComponent} from '../components/logout/logout.component';
 
 @NgModule({
   imports: [
@@ -17,6 +16,6 @@ import { QRCodeModule } from 'angularx-qrcode';
     TabsPageRoutingModule,
     QRCodeModule
   ],
-  declarations: [TabsPage/*, LogoutComponent*/]
+  declarations: [TabsPage]
 })
 export class TabsPageModule {}
