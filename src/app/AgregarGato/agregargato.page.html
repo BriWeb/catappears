@@ -1,41 +1,46 @@
-<ion-button routerLink="/Perfil" class="back-to-perfil">
-  <!-- slot="icon-only" -->
+<!-- <ion-button routerLink="/Perfil" class="back-to-perfil">
   <ion-icon name="arrow-back-circle-sharp"></ion-icon>
-</ion-button>
+</ion-button> -->
+<ion-header [translucent]="true" >
+  <ion-toolbar>
+    <ion-title>Agregar gato</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content padding>
   <form (submit)="handlePost($event)">
-    <ion-item>
+    <ion-item class="agregar_item">
       <ion-input [(ngModel)]="cat.name" label="Nombre" labelPlacement="floating" type="text" placeholder="Nombre" (input)="verificarCamposCompletos()" name="name"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="agregar_item">
       <ion-input [(ngModel)]="cat.age" label="Edad" labelPlacement="floating" type="number" placeholder="Edad" (input)="verificarCamposCompletos()" name="age"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="agregar_item">
       <ion-input [(ngModel)]="cat.city" label="Ciudad" labelPlacement="floating" type="text" placeholder="Ciudad" (input)="verificarCamposCompletos()" name="city"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="agregar_item">
       <ion-input [(ngModel)]="cat.location" label="Localidad" labelPlacement="floating" type="text" placeholder="Localidad" (input)="verificarCamposCompletos()" name="location"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="agregar_item">
       <ion-input [(ngModel)]="cat.description" label="Descripcion" labelPlacement="floating" type="text" placeholder="Descripcion" (input)="verificarCamposCompletos()" name="description"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="agregar_item">
       <ion-input [(ngModel)]="cat.photo" label="Foto" labelPlacement="floating" type="text" placeholder="Foto" (input)="verificarCamposCompletos()" name="photo"></ion-input>
     </ion-item>
     
-    <ion-item>
+    <ion-item class="agregar_item">
       <ion-checkbox [(ngModel)]="cat.lost" (input)="verificarCamposCompletos()" name="lost" ></ion-checkbox>
       <ion-label slot="start">Perdido</ion-label>
     </ion-item>
 
-    <ion-button expand="full" type="submit">Postear</ion-button>
-    <ion-button (click)="limpiarCampos()" rows="5" expand="full">Borrar</ion-button>
+    <ion-button class="agregar_button" expand="block" color="success" type="submit">Agregar</ion-button>
+
+    <ion-button class="agregar_button" expand="block" fill="outline" color="danger" (click)="limpiarCampos()" rows="5">Limpiar campos</ion-button>
 
   </form>
 

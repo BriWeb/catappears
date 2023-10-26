@@ -6,7 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UsersService } from './services/users.service';
+import { UsersService } from './helpers/servicio/users.service';
 
 @NgModule({
   declarations: [AppComponent],

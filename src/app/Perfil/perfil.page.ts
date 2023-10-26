@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../services/users.service';
+import { UsersService } from '../helpers/servicio/users.service';
 import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
@@ -36,7 +36,7 @@ export class PerfilPage implements OnInit{
       text: 'Cancelar',
       role: 'cancel',
       handler: () => {
-        console.log('Alert canceled');
+        // console.log('Alert canceled');
       },
     },
     {
@@ -53,6 +53,6 @@ export class PerfilPage implements OnInit{
   ];
   
   setResult(ev:any) {
-    console.log(`Dismissed with role: ${ev.detail.role}`);
+    // console.log(`Dismissed with role: ${ev.detail.role}`);
   }
 }

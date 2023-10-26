@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../services/users.service';
+import { UsersService } from '../helpers/servicio/users.service';
 
 @Component({
   selector: 'app-agregargato',

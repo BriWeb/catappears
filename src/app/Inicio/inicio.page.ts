@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from 'src/app/helpers/servicio/users.service';
 
 @Component({
   selector: 'InicioPage',
@@ -21,7 +21,7 @@ export class InicioPage implements OnInit{
     try {
       const result = await this.servicio.getAllUserCollection()
       this.gatitos = result.data;
-      console.log("gatitos: ", result);
+      // console.log("gatitos: ", result);
     } catch (error) {
       console.log(error);
     }

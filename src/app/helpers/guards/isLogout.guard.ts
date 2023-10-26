@@ -1,15 +1,15 @@
 import { inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { UsersService } from "../services/users.service";
+import { UsersService } from "../servicio/users.service";
 
-export const isLoginGuard = () => {
+export const isLogoutGuard = () => {
     const router = inject(Router);
     const usersService = inject(UsersService);
 
     if(usersService.isLogged()){
-        return true;
-    } else {
-        router.navigate(['/Login']);
+        router.navigate(['/Perfil']);
         return false;
+    } else {
+        return true;
     }
 }

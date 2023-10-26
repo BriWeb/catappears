@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../services/users.service';
+import { UsersService } from '../helpers/servicio/users.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
@@ -44,7 +44,7 @@ export class MisGatosPage implements OnInit {
         cssClass: 'alert-button-cancel',
         role: 'cancel',
         handler: () => {
-          console.log('Alert canceled');
+          // console.log('Alert canceled');
         },
       },
       {
@@ -52,12 +52,12 @@ export class MisGatosPage implements OnInit {
         cssClass: 'alert-button-confirm',
         role: 'confirm',
         handler: () => {
-          console.log('Alert confirmed');
+          // console.log('Alert confirmed');
         },
       },
     ];
 
     setResult(ev: any) {
-      console.log(`Dismissed with role: ${ev.detail.role}`);
+      // console.log(`Dismissed with role: ${ev.detail.role}`);
     }
 }

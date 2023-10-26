@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
-import { isLoginGuard } from '../guards/isLogin.guard';
-import { isLogoutGuard } from '../guards/isLogout.guard';
+import { RouterPage } from './router.page';
+import { isLoginGuard } from '../helpers/guards/isLogin.guard';
+import { isLogoutGuard } from '../helpers/guards/isLogout.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: TabsPage,
+    component: RouterPage,
     children: [
       {
         path: 'Login',
@@ -27,6 +27,20 @@ const routes: Routes = [
         path: '',
         redirectTo: '/Login',
         pathMatch: 'full'
+      },
+      {
+        path: 'MisGatos',
+        loadChildren: () => import('../MisGatos/misgatos.module').then( m => m.MisGatosPageModule),
+        canActivate: [isLoginGuard]
+      },
+      {
+        path: 'AgregarGato',
+        loadChildren: () => import('../AgregarGato/agregargato.module').then( m => m.AgregarGatoPageModule)
+      },
+      {
+        path: 'DatosPersonales',
+        loadChildren: () => import('../DatosPersonales/datospersonales.module').then( m => m.DatosPersonalesPageModule),
+        canActivate: [isLoginGuard]
       }
     ]
   },
@@ -40,4 +54,4 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class RouterPageRoutingModule {}

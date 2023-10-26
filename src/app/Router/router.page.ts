@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsersService } from '../services/users.service';
+import { UsersService } from '../helpers/servicio/users.service';
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  selector: 'RouterPage',
+  templateUrl: 'router.page.html',
+  styleUrls: ['router.page.scss']
 })
-export class TabsPage {
+export class RouterPage {
 
   constructor(private router: Router) {}
 

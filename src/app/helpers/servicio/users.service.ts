@@ -177,7 +177,7 @@ export class UsersService {
         
       });
       
-      console.log("data vieja: ", allData);
+      // console.log("data vieja: ", allData);
       /*let dataFormated = */this.formatPhoto(allData);
       // console.log("data formateada: ", dataFormated);
 

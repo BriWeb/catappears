@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { TabsPageRoutingModule } from './tabs-routing.module';
+import { RouterPageRoutingModule } from './router-routing.module';
 
-import { TabsPage } from './tabs.page';
+import { RouterPage } from './router.page';
 import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -13,9 +13,9 @@ import { QRCodeModule } from 'angularx-qrcode';
     IonicModule,
     CommonModule,
     FormsModule,
-    TabsPageRoutingModule,
+    RouterPageRoutingModule,
     QRCodeModule
   ],
-  declarations: [TabsPage]
+  declarations: [RouterPage]
 })
-export class TabsPageModule {}
+export class RouterPageModule {}

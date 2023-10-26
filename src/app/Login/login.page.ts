@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewChild} from '@angular/core';
 import { IonInput, IonModal } from '@ionic/angular';
-import {UsersService} from '../services/users.service';
+import {UsersService} from '../helpers/servicio/users.service';
 
 @Component({
   selector: 'LoginPage',
