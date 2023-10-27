@@ -10,6 +10,54 @@ import { Router } from "@angular/router";
   providedIn: 'root'
 })
 
+
+// El método doc() se utiliza para obtener una referencia de un documento específico dentro de una colección. 
+// Recibe tres parámetros: 
+//    *El primero es la configuración de la base de datos.
+//    *El segundo es el nombre de la colección que contiene el documento que se quiere obtener.
+//    *El tercero es el id del documento que se quiere obtener. (El id del documento del usuario logueado se obtiene con 
+//          localStorage.getItem('docRefToken') ya que ahí lo almacenamos al loguearse.)
+
+
+// El método getDoc() se utiliza para obtener un documento específico en una colección o subcolección. 
+// Recibe un parámetro: 
+//    *El único parámetro que recibe es la referencia del documento (Obtenida con el método doc() ).
+
+
+// El método collection() se utiliza para obtener una referencia a una colección.
+// Recibe dos parámetros: 
+//    *El primero es la referencia al documento padre en el que se encuentra la colección. (El documento padre puede ser la
+//          base de datos misma, o la referencia de un documento obtenida con el método doc() )
+//    *El segundo es el nombre de la colección a la que se quiere acceder.
+
+
+// El método query() se utiliza para construir criterios de búsqueda.
+// Recibe dos o más parámetros:
+//    *El primero es la referencia a la colección (Obtenida con el método collection() ).
+//    *La cantidad de parámetros siguientes son métodos, y podemos usar los que necesitemos:
+//        *where("email", "==", myEmail)
+//        *orderBy('edad', 'asc')
+//        *limit(10) 
+
+
+// El método getDocs() se utiliza para obtener todos los documentos, o solamente aquellos que cumplan con una condición, en una 
+// colección o subcolección. 
+// Recibe un parámetro: 
+//    *El único parámetro que recibe es la referencia de la colección (Obtenida con el método collection() ) o el método query.
+
+
+//El método addDoc() se utiliza para crear un documento dentro de una colección.
+//Recibe dos parámetros: 
+//    *El primero es la referencia de la colección donde se desea agregar el documento. (obtenida con el método collection() )
+//    *El segundo es un objeto que contiene cada uno de los campos del documento que se va a crear.
+
+
+//El método updateDoc() se utiliza para actualizar los datos de un documento específico en una colección.
+//Recibe dos parámetros: 
+//    *El primero es la referencia al documento  que se quiere actualizar. (obtenida con el método doc() )
+//    *El segundo es un objeto que contiene los nuevos campos que se van a actualizar.
+
+
 export class UsersService {
 
 
@@ -74,7 +122,7 @@ export class UsersService {
       const token = await user.getIdToken();
       localStorage.setItem('accessToken', token);
 
-      await this.getDocByAccount(user.email);
+      await this.getIdUserLogin(user.email);
 
       result = {
         ret: true,
@@ -93,27 +141,6 @@ export class UsersService {
     }
   }
 
-      // {
-      //   uid : userCredential.user.uid,
-      //   first: "",
-      //   last: "",
-      //   email: userCredential.user.email,
-      //   creationTime : userCredential.user.metadata.creationTime,
-      //   lastLoginAt : userCredential.user.metadata.lastLoginAt,
-      //   cats: [
-      //     {
-      //       city: '',
-      //       description: 'Sin descripción',
-      //       location: '',
-      //       name: '',
-      //       photo: '',
-      //       qr: '',
-      //       lost: false,
-      //       age: 0
-      //     },
-      //   ]
-      // }
-
   async createUserCollection(userCredential: any) {
     const newUser = {
       uid : userCredential.user.uid,
@@ -121,13 +148,14 @@ export class UsersService {
       last: "",
       email: userCredential.user.email,
       creationTime : userCredential.user.metadata.creationTime,
-      lastLoginAt : userCredential.user.metadata.lastLoginAt
+      lastLoginAt : userCredential.user.metadata.lastLoginAt,
+      address: "",
+      tel: ""
     };
 
     try {
       await addDoc(collection(this.db, "users"), newUser);
 
-      // await this.createCatColecction();
     } catch (error) {
       console.error('Error al crear la colección de usuario', error);
     }
@@ -139,6 +167,8 @@ export class UsersService {
   
       if(userDocRef){
         cat.qr = '';
+        cat.photo = this.formatPhoto(cat.photo);
+        
         const userRef = doc(this.db, "users", userDocRef);
         const catsCollectionRef = collection(userRef, "cats");
         const docRef = await addDoc(catsCollectionRef, cat);
@@ -158,86 +188,87 @@ export class UsersService {
     }
   }
 
-  async updateCatCollection(){
-    
-  }
-  async getAllUserCollection(){
-    let result;
-    try {
-      const querySnapshot = await getDocs(collection(this.db, "users"));
+  async getUserCatsCollection(){
 
-      let allData: any[] = [];
-      querySnapshot.forEach((doc) => {
-        let cats = doc.data()['cats'];
-        // console.log(cats);
-        for(let cat in cats){
-          allData = [...allData, cats[cat]]
-
-        }
-        
-      });
-      
-      // console.log("data vieja: ", allData);
-      /*let dataFormated = */this.formatPhoto(allData);
-      // console.log("data formateada: ", dataFormated);
-
-      result = {
-        ret: true,
-        data: allData
-      }
-
-      return result;
-    } catch (error) {
-      result = {
-        ret: false,
-        data: []
-      }
-      return result;
-    }
-  }
-
-  async getUserCollection() {
-    let result = {
+    let response = {
       ret: false,
       data: []
-    };
+    }; 
+
     try {
       const userDocRef = localStorage.getItem('docRefToken');
       if(userDocRef){
         const userRef = doc(this.db, "users", userDocRef);
-        const userDocSnapshot = await getDoc(userRef);
-        if (userDocSnapshot.exists()) {
-          const userData = userDocSnapshot.data();
-          this.formatPhoto(userData['cats']);
-          result = {
-            ret: true,
-            data: userData['cats']
-          };
-        } else {
-          result = {
-            ret: false,
-            data: []
-          };
-        }
-      }
-      return result;
+        const catsRef = collection(userRef, 'cats'); 
+        const catsDoc = await getDocs(catsRef);
   
-    } catch (error) {
-      result = {
-        ret: false,
-        data: []
+        let cats : any = [];
+        catsDoc.forEach(catDoc => {
+          cats = [...cats, catDoc.data()]
+        });
+  
+        response = {
+          ret: true,
+          data: cats
+        }
+
       }
-      return result;
+
+      return response;
+      
+    } catch (error) {
+      return response;
     }
   }
 
-  async getDocByAccount(email : string | null) {
+  async updateCatCollection(){
+    
+  }
+
+  //CAMBIAR ESTE MÉTODO PARA OBTENER TODOS LOS GATOS
+  // async getAllUserCollection(){
+  //   let result;
+  //   try {
+  //     const users = await getDocs(collection(this.db, "users"));
+
+  //     let allData: any[] = [];
+  //     users.forEach((user) => {
+  //       let cats = user.data()['cats'];
+  //       // console.log(cats);
+  //       for(let cat in cats){
+  //         allData = [...allData, cats[cat]]
+
+  //       }
+        
+  //     });
+      
+  //     // console.log("data vieja: ", allData);
+  //     /*let dataFormated = */this.formatPhoto(allData);
+  //     // console.log("data formateada: ", dataFormated);
+
+  //     result = {
+  //       ret: true,
+  //       data: allData
+  //     }
+
+  //     return result;
+  //   } catch (error) {
+  //     result = {
+  //       ret: false,
+  //       data: []
+  //     }
+  //     return result;
+  //   }
+  // }
+
+
+  async getIdUserLogin(email : string | null) {
     try {
       const usersCollectionRef = collection(this.db, "users");
-      const querySnapshot = await getDocs(query(usersCollectionRef, where("email", "==", email)));
+      const user = await getDocs(query(usersCollectionRef, where("email", "==", email)));
 
-      if (!querySnapshot.empty) {
-        const doc = querySnapshot.docs[0];
+      if (!user.empty) {
+        const doc = user.docs[0];
         localStorage.setItem('docRefToken', doc.id);
       } else {
         console.log(`No se encontró ningún usuario con el correo electrónico ${email}`);
@@ -247,15 +278,13 @@ export class UsersService {
     }
   }
 
-  formatPhoto(data : Array<any>){
-    for(let i = 0; i<data.length;i++){
-      let photo = data[i]['photo'];
+  formatPhoto(photo : string){
+
       if(photo != ''){
         photo = this.getIdPhoto(photo);
-        data[i]['photo'] = photo;
       }
-    }
-    // return data;
+    
+    return photo;
   }
 
   getIdPhoto(enlace : string){

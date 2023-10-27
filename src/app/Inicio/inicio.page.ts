@@ -14,18 +14,18 @@ export class InicioPage implements OnInit{
   maxCaracteres: number = 100;
   
   ngOnInit() {
-    this.getAllGatitos();
+    // this.getAllGatitos();
   }
 
-  async getAllGatitos(){
-    try {
-      const result = await this.servicio.getAllUserCollection()
-      this.gatitos = result.data;
-      // console.log("gatitos: ", result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async getAllGatitos(){
+  //   try {
+  //     const result = await this.servicio.getAllUserCollection()
+  //     this.gatitos = result.data;
+  //     // console.log("gatitos: ", result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   mostrarMas(){
     
