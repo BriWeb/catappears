@@ -7,6 +7,8 @@ import { RouterPageRoutingModule } from './router-routing.module';
 
 import { RouterPage } from './router.page';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ScanerComponent } from '../components/scaner/scaner.component';
+
 
 @NgModule({
   imports: [
@@ -14,8 +16,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     CommonModule,
     FormsModule,
     RouterPageRoutingModule,
-    QRCodeModule
+    QRCodeModule,
   ],
-  declarations: [RouterPage]
+  declarations: [RouterPage,ScanerComponent ]
 })
 export class RouterPageModule {}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../helpers/servicio/users.service';
 import { SafeUrl } from '@angular/platform-browser';
 
+
 @Component({
   selector: 'PerfilPage',
   templateUrl: 'perfil.page.html',

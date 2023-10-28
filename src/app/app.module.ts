@@ -10,7 +10,7 @@ import { UsersService } from './helpers/servicio/users.service';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule,IonicModule.forRoot(), AppRoutingModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, UsersService],
   bootstrap: [AppComponent],
 })
