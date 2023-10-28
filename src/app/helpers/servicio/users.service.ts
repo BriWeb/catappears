@@ -188,6 +188,34 @@ export class UsersService {
     }
   }
 
+    //CAMBIAR ESTE MÉTODO PARA OBTENER TODOS LOS GATOS
+  async getAllUserCollection(){
+    
+    let result = {
+      ret: false,
+      data: []
+    };
+    
+    let catsToShow = [];
+
+    try {
+      const users = await getDocs(collection(this.db, "users"));
+      
+      users.forEach(userDoc => {
+        let gatos = getDocs(collection(doc(this.db, 'cats', userDoc.id), 'cats'));
+        console.log("Gatos: ", gatos);
+      });
+
+      console.log(users);
+
+      // return result;
+    } catch (error) {
+
+      // return result;
+    }
+  }
+
+
   async getUserCatsCollection(){
 
     let response = {
@@ -224,42 +252,6 @@ export class UsersService {
   async updateCatCollection(){
     
   }
-
-  //CAMBIAR ESTE MÉTODO PARA OBTENER TODOS LOS GATOS
-  // async getAllUserCollection(){
-  //   let result;
-  //   try {
-  //     const users = await getDocs(collection(this.db, "users"));
-
-  //     let allData: any[] = [];
-  //     users.forEach((user) => {
-  //       let cats = user.data()['cats'];
-  //       // console.log(cats);
-  //       for(let cat in cats){
-  //         allData = [...allData, cats[cat]]
-
-  //       }
-        
-  //     });
-      
-  //     // console.log("data vieja: ", allData);
-  //     /*let dataFormated = */this.formatPhoto(allData);
-  //     // console.log("data formateada: ", dataFormated);
-
-  //     result = {
-  //       ret: true,
-  //       data: allData
-  //     }
-
-  //     return result;
-  //   } catch (error) {
-  //     result = {
-  //       ret: false,
-  //       data: []
-  //     }
-  //     return result;
-  //   }
-  // }
 
 
   async getIdUserLogin(email : string | null) {
