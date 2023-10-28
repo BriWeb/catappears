@@ -10,22 +10,25 @@ export class InicioPage implements OnInit{
 
   constructor(private servicio: UsersService) { }
 
-  gatitos : Array<any> = [];
+  cats : Array<any> = [];
   maxCaracteres: number = 100;
   
   ngOnInit() {
-    // this.getAllGatitos();
+    this.getAllGatitos();
   }
 
-  // async getAllGatitos(){
-  //   try {
-  //     const result = await this.servicio.getAllUserCollection()
-  //     this.gatitos = result.data;
-  //     // console.log("gatitos: ", result);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  async getAllGatitos(){
+    try {
+      const result = await this.servicio.getUsersCatsCollection();
+      if(result.ret){
+        this.cats = result.data;
+      } else{
+        console.log("Error al obtener los gatos");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   mostrarMas(){
     

@@ -1,11 +1,9 @@
-.back-to-perfil{
-    position: absolute;
-    z-index: 20;
-    top: 1rem;
-    left: 1rem;
-}
-
 .agregar_item, .agregar_button{
     padding-bottom: .5rem;
     padding-top: .5rem;
 }
+
+.ion-item-no-lines {
+    --border-width: 0;
+    --inner-border-width: 0;
+  }

@@ -173,7 +173,7 @@ export class UsersService {
     try {
       const userDocRef = localStorage.getItem('docRefToken');
       if(userDocRef){
-        const userRef = await doc(this.db, "users", userDocRef);
+        const userRef = doc(this.db, "users", userDocRef);
         const user = await getDoc(userRef)
        
          response = {
@@ -215,33 +215,67 @@ export class UsersService {
     }
   }
 
-    //CAMBIAR ESTE MÉTODO PARA OBTENER TODOS LOS GATOS
-  async getAllUserCollection(){
+  async getUsersCatsCollection(){
     
     let result = {
       ret: false,
       data: []
     };
-    
-    let catsToShow = [];
+
+    const catPromises : any = [];
+    let catsToShow : any = [];
 
     try {
+      // Obtiene todos los documentos de la colección "users"
       const users = await getDocs(collection(this.db, "users"));
       
+      // Recorre los documentos
       users.forEach(userDoc => {
-        let gatos = getDocs(collection(doc(this.db, 'cats', userDoc.id), 'cats'));
-        console.log("Gatos: ", gatos);
+        // Por cada documento obtenemos su referencia
+        let docRef = doc(this.db, 'users', userDoc.id); 
+        // Por cada documento obtenemos su subcolección 'cats'
+        let collectionRef = collection(docRef, 'cats');
+
+        // Dentro de la subcolección obtenemos todos aquellos documentos que cumplen con la condición
+        // Al ser muchas promesas, las guardamos en el array para ejecutarlas todas a la vez en una sola llamada
+        let catsPromise = getDocs(query(collectionRef, where("lost", "==", true)));
+        catPromises.push(catsPromise);
       });
+      const userCats = await Promise.all(catPromises);
+      
+      // Recorremos los documentos        
+      userCats.forEach(cats => {
+        cats.forEach((cat: any) => {
+          // Agregamos el documento al array
+          catsToShow.push(cat.data());
+        })
+      })
 
-      console.log(users);
+      result = {
+        ret: true,
+        data: catsToShow
+      };
 
-      // return result;
+      return result;
     } catch (error) {
 
-      // return result;
+      return result;
     }
   }
 
+  async editUser(user : object){
+    try {
+      const userDocRef = localStorage.getItem('docRefToken');
+      if(userDocRef){
+        const userRef = doc(this.db, "users", userDocRef);
+        await updateDoc(userRef, user);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
 
   async getUserCatsCollection(){
 

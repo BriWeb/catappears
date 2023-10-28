@@ -32,4 +32,17 @@ export class DatosPersonalesPage implements OnInit {
     }
   }
 
+  async editUser(e : Event) {
+    e.preventDefault();
+    try {
+
+      let ok = await this.servicio.editUser(this.user);  
+      if(ok){
+        console.log("Éxito al editar usuario");
+      }
+    } catch (error) {
+      console.log("Error al editar usuario");
+    }
+  }
+
 }
