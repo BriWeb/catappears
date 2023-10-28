@@ -5,6 +5,8 @@ import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPass
 import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, updateDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { Router } from "@angular/router";
+import { __await } from 'tslib';
+import { retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -158,6 +160,31 @@ export class UsersService {
 
     } catch (error) {
       console.error('Error al crear la colección de usuario', error);
+    }
+  }
+
+  async getUserCollection(){
+
+    let response = {
+      ret: false,
+      data: [] as any [],
+    }; 
+
+    try {
+      const userDocRef = localStorage.getItem('docRefToken');
+      if(userDocRef){
+        const userRef = await doc(this.db, "users", userDocRef);
+        const user = await getDoc(userRef)
+       
+         response = {
+          ret: true,
+          data: [user.data()]
+         }
+        
+        }
+        return response
+      } catch (error) {
+     return response
     }
   }
 

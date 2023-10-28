@@ -5,5 +5,33 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  
+  <ion-content>
+    <form >
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input name="nombre" [(ngModel)]='user.first' type="text" required></ion-input>
+        </ion-item>
 
+        <ion-item>
+          <ion-label position="floating">Apellido</ion-label>
+          <ion-input name="apellido" [(ngModel)]='user.last' type="text" required></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Dirección</ion-label>
+          <ion-input name="direccion" [(ngModel)]='user.address' type="text" required></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Teléfono</ion-label>
+          <ion-input name="telefono" [(ngModel)]='user.tel' type="text" required></ion-input>
+        </ion-item>
+      </ion-list>
+  
+      <ion-button expand="full" type="submit" color="success">Aceptar</ion-button>
+    </form>
+  </ion-content>
+  
 </ion-content>
