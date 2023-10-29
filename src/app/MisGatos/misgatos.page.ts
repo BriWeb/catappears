@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../helpers/servicio/users.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'MisGatosPage',
@@ -9,15 +9,35 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 })
 export class MisGatosPage implements OnInit {
 
-  constructor(private servicio: UsersService, private sanitizer: DomSanitizer) { 
+  constructor(private servicio: UsersService, private route: ActivatedRoute) { 
   }
 
   cats: Array<any> = [];
   maxCaracteres: number = 100;
 
+  public alertButtons = [
+    {
+      text: 'Cancelar',
+      cssClass: 'alert-button-cancel',
+      role: 'cancel',
+      handler: () => {
+        // console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'Confirmar',
+      cssClass: 'alert-button-confirm',
+      role: 'confirm',
+      handler: () => {
+        // console.log('Alert confirmed');
+      },
+    },
+  ];
 
   ngOnInit() {
-    this.findGatitos();
+    this.route.url.subscribe(url => {
+      this.findGatitos();
+    });
   }
 
   async findGatitos(){
@@ -25,37 +45,34 @@ export class MisGatosPage implements OnInit {
       const result = await this.servicio.getUserCatsCollection();
       if(result.ret){
         this.cats = result.data;
+        console.log(result.data)
       }
     } catch (error) {
       console.log(error);
     }
   }
   
-  mostrarMas(){
-    
+  mostrarMas(id : string){
+    console.log("el id es: ", id)
   }
 
-  // Alerta de eliminar a un gatito
-    public alertButtons = [
-      {
-        text: 'Cancelar',
-        cssClass: 'alert-button-cancel',
-        role: 'cancel',
-        handler: () => {
-          // console.log('Alert canceled');
-        },
-      },
-      {
-        text: 'Confirmar',
-        cssClass: 'alert-button-confirm',
-        role: 'confirm',
-        handler: () => {
-          // console.log('Alert confirmed');
-        },
-      },
-    ];
 
-    setResult(ev: any) {
-      // console.log(`Dismissed with role: ${ev.detail.role}`);
+
+  async setResult(ev: any, id : string) {
+    
+    if(ev.detail.role == 'confirm'){
+      try {
+        const deleted = await this.servicio.deleteCat(id);
+        if(deleted){
+          await this.findGatitos();
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+      
     }
+  }
+
+  
 }

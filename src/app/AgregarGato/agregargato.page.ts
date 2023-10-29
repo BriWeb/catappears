@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UsersService } from '../helpers/servicio/users.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { UsersService } from '../helpers/servicio/users.service';
   templateUrl: './agregargato.page.html',
   styleUrls: ['./agregargato.page.scss'],
 })
-export class AgregarGatoPage implements OnInit {
+export class AgregarGatoPage {
   
   constructor(private servicio: UsersService) { }
   
@@ -20,7 +20,6 @@ export class AgregarGatoPage implements OnInit {
     age: ''
   };
 
-  ngOnInit() { }
 
   async handlePost(e : Event) {
     e.preventDefault();

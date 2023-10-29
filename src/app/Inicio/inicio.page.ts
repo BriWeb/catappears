@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/helpers/servicio/users.service';
 
 @Component({
@@ -8,13 +9,15 @@ import { UsersService } from 'src/app/helpers/servicio/users.service';
 })
 export class InicioPage implements OnInit{
 
-  constructor(private servicio: UsersService) { }
+  constructor(private servicio: UsersService, private route: ActivatedRoute) { }
 
   cats : Array<any> = [];
   maxCaracteres: number = 100;
   
   ngOnInit() {
-    this.getAllGatitos();
+    this.route.url.subscribe(url => {
+      this.getAllGatitos();
+    });
   }
 
   async getAllGatitos(){

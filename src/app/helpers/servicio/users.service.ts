@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-// ejecutar npm install firebase
 import { initializeApp } from 'firebase/app';
-import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, FacebookAuthProvider } from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, updateDoc } from 'firebase/firestore';
+import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword/*, FacebookAuthProvider */} from 'firebase/auth';
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, updateDoc, deleteDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { Router } from "@angular/router";
-import { __await } from 'tslib';
-import { retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +19,11 @@ import { retry } from 'rxjs';
 
 
 // El método getDoc() se utiliza para obtener un documento específico en una colección o subcolección. 
+// Recibe un parámetro: 
+//    *El único parámetro que recibe es la referencia del documento (Obtenida con el método doc() ).
+
+
+// El método deleteDoc() se utiliza para eliminar un documento específico en una colección o subcolección. 
 // Recibe un parámetro: 
 //    *El único parámetro que recibe es la referencia del documento (Obtenida con el método doc() ).
 
@@ -62,27 +64,25 @@ import { retry } from 'rxjs';
 
 export class UsersService {
 
-
   constructor(private router: Router) { }
 
   error = environment.AUTH_ERROR_CODES;
-
   app = initializeApp(environment.FIREBASE_CONFIG);
   auth = getAuth();
   db = getFirestore(this.app);
+  // provider = new FacebookAuthProvider();
 
-  provider = new FacebookAuthProvider();
-
-  isLogged(): boolean{
+  isLogged(){
     return localStorage.getItem('accessToken') ? true : false;
   }
 
-  async logout(): Promise<void> {
+  async logout(){
     try {
       await signOut(this.auth);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('docRefToken');
-      this.router.navigate(['/Login']);
+      // this.router.navigate(['/Login']);
+      window.location.reload()
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
@@ -293,7 +293,7 @@ export class UsersService {
   
         let cats : any = [];
         catsDoc.forEach(catDoc => {
-          cats = [...cats, catDoc.data()]
+          cats = [...cats, {...catDoc.data(), 'id' : catDoc.id}]
         });
   
         response = {
@@ -314,6 +314,24 @@ export class UsersService {
     
   }
 
+  async deleteCat(id : string){
+    let deleted = false;
+
+    try {
+      const userDocRef = localStorage.getItem('docRefToken');
+      if(userDocRef){
+        const userRef = doc(this.db, "users", userDocRef);
+        const catsRef = doc(userRef, "cats", id);
+        
+        await deleteDoc(catsRef);
+        deleted = true;
+        return deleted;
+      }
+      return deleted;
+    } catch (error) {
+      return deleted;
+    }
+  }
 
   async getIdUserLogin(email : string | null) {
     try {

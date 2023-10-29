@@ -45,8 +45,9 @@ export class PerfilPage implements OnInit{
       handler: async () => {
         try {
           await this.servicio.logout();
+
         } catch (error) {
-          
+          console.log(error)
         }
       },
     },
