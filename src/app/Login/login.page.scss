@@ -1,19 +1,12 @@
-// loginpage{
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
 .login{
   overflow-x: auto;
-  min-height: calc(100vh - 51px); //51 (tab) + 38 (alerta)
-  // height: clamp(500px, calc(100vh - 51px), 900px);
+  // min-height: calc(100vh - 57px); //51 (tab)
   max-width: 550px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 35px;
 }
 
 .logo-containter{
@@ -24,13 +17,6 @@
   justify-content: center;
   align-items: center;
 }
-
-
-// .logo-cats{
-//   display: block;
-//   max-width: 100%;
-//   background-color: black;
-// }
 
 form{
   width: 90%;
@@ -93,24 +79,12 @@ ion-input{
   --border-radius: 1.5rem;
   // overflow: hidden;
 }
-    
-// .singin-modal::part(backdrop) {
-//     background: rgba(209, 213, 219, 0.37);
-// }
 
 ion-item{
   --background: none;
   --background-focused: none;
 }
-    
-// ion-modal ion-toolbar {
-//   --background: rgb(14 116 144);
-//   --color: white;
-// }
 
-.input-clear-icon{
-  tabindex: -1;
-}
 
 @media screen and (min-height: 300px) {
   .login{

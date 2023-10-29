@@ -25,6 +25,8 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
   
+@import 'ngx-toastr/toastr';
+
   //Estilo del Alert para Eliminar un gatito 
   .custom-alert .alert-button-group {
     padding: 8px;
@@ -54,3 +56,6 @@
     border-top-right-radius: 13px;
   }
 
+  .centered-title {
+    text-align: center;
+  }

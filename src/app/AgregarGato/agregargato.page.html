@@ -1,9 +1,6 @@
-<!-- <ion-button routerLink="/Perfil" class="back-to-perfil">
-  <ion-icon name="arrow-back-circle-sharp"></ion-icon>
-</ion-button> -->
 <ion-header [translucent]="true" >
   <ion-toolbar>
-    <ion-title>Agregar gato</ion-title>
+    <ion-title class="centered-title">Agregar gato</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -37,9 +34,9 @@
       <ion-checkbox [(ngModel)]="cat.lost" (input)="verificarCamposCompletos()" name="lost" slot="start">Perdido</ion-checkbox>
     </ion-item>
 
-    <ion-button class="agregar_button" expand="block" color="success" type="submit">Agregar</ion-button>
+    <ion-button class="agregar_button" expand="block" color="success" type="submit">Guardar</ion-button>
 
-    <ion-button class="agregar_button" expand="block" fill="outline" color="danger" (click)="limpiarCampos()" rows="5">Limpiar campos</ion-button>
+    <ion-button class="agregar_button" expand="block" color="danger" (click)="limpiarCampos()" rows="5">Limpiar campos</ion-button>
 
   </form>
 

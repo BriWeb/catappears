@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Datos personales</ion-title>
+    <ion-title class="centered-title">Datos personales</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,23 +10,29 @@
     <form (submit)="editUser($event)">
       <ion-list>
         <ion-item  class="datos_item">
-          <ion-input label="Nombre" labelPlacement="floating" name="nombre" [(ngModel)]='user.first' type="text" required></ion-input>
+          <ion-input label="Mi nombre" labelPlacement="floating" name="nombre" [(ngModel)]='user.first' type="text" required></ion-input>
         </ion-item>
 
         <ion-item  class="datos_item">
-          <ion-input label="Apellido" labelPlacement="floating" name="apellido" [(ngModel)]='user.last' type="text" required></ion-input>
+          <ion-input label="Mi apellido" labelPlacement="floating" name="apellido" [(ngModel)]='user.last' type="text" required></ion-input>
         </ion-item>
         
         <ion-item  class="datos_item">
-          <ion-input label="Dirección" labelPlacement="floating" name="direccion" [(ngModel)]='user.address' type="text" required></ion-input>
+          <ion-input label="Mi dirección" labelPlacement="floating" name="direccion" [(ngModel)]='user.address' type="text" required></ion-input>
         </ion-item>
         
         <ion-item  class="datos_item">
-          <ion-input label="Teléfono" labelPlacement="floating"  name="telefono" [(ngModel)]='user.tel' type="text" required></ion-input>
+          <ion-input label="Mi teléfono" labelPlacement="floating"  name="telefono" [(ngModel)]='user.tel' type="text" required></ion-input>
+        </ion-item>
+
+        <ion-item  class="datos_item">
+          <ion-input label="Mi foto" labelPlacement="floating"  name="foto" [(ngModel)]='user.photo' type="text"></ion-input>
         </ion-item>
       </ion-list>
   
-      <ion-button expand="block" class="datos_button" type="submit" color="success">Aceptar</ion-button>
+      <ion-button expand="block" class="datos_button" type="submit" color="success">
+        Guardar
+      </ion-button>
     </form>
   </ion-content>
   

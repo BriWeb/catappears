@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { UsersService } from '../helpers/servicio/users.service';
+import { UsersService } from '../helpers/users/users.service';
+import { NotificationsService } from '../helpers/notifications/notifications.service';
 
 @Component({
   selector: 'app-agregargato',
@@ -8,7 +9,7 @@ import { UsersService } from '../helpers/servicio/users.service';
 })
 export class AgregarGatoPage {
   
-  constructor(private servicio: UsersService) { }
+  constructor(private usersService: UsersService, private notificationsService: NotificationsService) { }
   
   cat = {
     city: '',
@@ -25,19 +26,19 @@ export class AgregarGatoPage {
     e.preventDefault();
     try {
       if(this.verificarCamposCompletos()){
-        const cat_id = await this.servicio.createCatColecction(this.cat);  
+        const cat_id = await this.usersService.createCatDocument(this.cat);  
         if(cat_id){
+          this.notificationsService.showSuccess("Gato creado correctamente.", 'Éxito');
           this.limpiarCampos();
-          console.log("gato creado exitosamente con el id: ", cat_id.id);
         } else {
-          console.log("Error al crear el gatito");
+          this.notificationsService.showError("Error al crear el gato.", 'Error');
         }
       } else {
-        console.log("Debe completar todos los campos");
+        this.notificationsService.showWarning("Debe completar todos los campos.", 'Alerta');
       }
       
     } catch (error) {
-      console.log("Error al crear el gatito");
+      this.notificationsService.showError("Error al crear el gato.", 'Error');
     }
   }
 

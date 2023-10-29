@@ -39,6 +39,11 @@ const routes: Routes = [
         canActivate: [isLoginGuard]
       },
       {
+        path: 'EditarGato/:id',
+        loadChildren: () => import('../EditarGato/editargato.module').then( m => m.EditarGatoPageModule),
+        canActivate: [isLoginGuard]
+      },
+      {
         path: '',
         redirectTo: '/Login',
         pathMatch: 'full'

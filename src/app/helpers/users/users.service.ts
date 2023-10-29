@@ -12,7 +12,8 @@ import { Router } from "@angular/router";
 
 // El método doc() se utiliza para obtener una referencia de un documento específico dentro de una colección. 
 // Recibe tres parámetros: 
-//    *El primero es la configuración de la base de datos.
+//    *El primero es la referencia al documento padre en el que se encuentra la colección. (El documento padre puede ser la
+//          base de datos misma, o la referencia de un documento obtenida con el método doc() )
 //    *El segundo es el nombre de la colección que contiene el documento que se quiere obtener.
 //    *El tercero es el id del documento que se quiere obtener. (El id del documento del usuario logueado se obtiene con 
 //          localStorage.getItem('docRefToken') ya que ahí lo almacenamos al loguearse.)
@@ -99,7 +100,7 @@ export class UsersService {
         data: user
       }
 
-      await this.createUserCollection(userCredential);
+      await this.createUserDocument(userCredential);
       
       return result;
       
@@ -143,7 +144,7 @@ export class UsersService {
     }
   }
 
-  async createUserCollection(userCredential: any) {
+  async createUserDocument(userCredential: any) {
     const newUser = {
       uid : userCredential.user.uid,
       first: "",
@@ -152,7 +153,8 @@ export class UsersService {
       creationTime : userCredential.user.metadata.creationTime,
       lastLoginAt : userCredential.user.metadata.lastLoginAt,
       address: "",
-      tel: ""
+      tel: "",
+      photo: ""
     };
 
     try {
@@ -163,7 +165,7 @@ export class UsersService {
     }
   }
 
-  async getUserCollection(){
+  async getUserDocument(){
 
     let response = {
       ret: false,
@@ -188,7 +190,33 @@ export class UsersService {
     }
   }
 
-  async createCatColecction(cat : any){
+  async getCatDocument(id_user : string, id_cat : string){
+    
+    let response = {
+      ret : false,
+      data: {} as any
+    }
+
+    try {
+      let userDocRef = doc(this.db, 'users', id_user);
+
+      let catDocRef =  doc(userDocRef, 'cats', id_cat);
+
+      let catDoc = await getDoc(catDocRef);
+
+      response = {
+        ret : true,
+        data: catDoc.data()
+      }
+
+      return response;
+
+    } catch (error) {
+      return response;
+    }
+  }
+
+  async createCatDocument(cat : any){
     try {
       const userDocRef = localStorage.getItem('docRefToken');
   
@@ -210,12 +238,11 @@ export class UsersService {
       }
       return null;
     } catch (error) {
-      console.log("Error al crear un gatito.");
       return null;
     }
   }
 
-  async getUsersCatsCollection(){
+  async getUsersCatsLost(){
     
     let result = {
       ret: false,
@@ -263,12 +290,38 @@ export class UsersService {
     }
   }
 
-  async editUser(user : object){
+  async editUserDocument(user : any){
     try {
       const userDocRef = localStorage.getItem('docRefToken');
       if(userDocRef){
+        if(user.photo != ''){
+          let photo = this.formatPhoto(user.photo);
+          user.photo = photo;
+        }
         const userRef = doc(this.db, "users", userDocRef);
         await updateDoc(userRef, user);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async editCatDocument(cat : any, id_cat : string){
+    try {
+      const userDocId = localStorage.getItem('docRefToken');
+      if(userDocId){
+
+        let userDocRef = doc(this.db, 'users', userDocId);
+
+        let catDocRef =  doc(userDocRef, 'cats', id_cat);
+        if(cat.photo != ''){
+          let photo = this.formatPhoto(cat.photo);
+          cat.photo = photo;
+        }
+
+        await updateDoc(catDocRef, cat);
         return true;
       }
       return false;
@@ -310,11 +363,11 @@ export class UsersService {
     }
   }
 
-  async updateCatCollection(){
+  async updateCatDocument(){
     
   }
 
-  async deleteCat(id : string){
+  async deleteCatDocument(id : string){
     let deleted = false;
 
     try {
@@ -359,6 +412,10 @@ export class UsersService {
   }
 
   getIdPhoto(enlace : string){
+    if (enlace.includes('https://drive.google.com/uc?export=download&id=')) {
+      return enlace;
+    }
+
     let id = enlace.match(/\/d\/(.*?)\/view/);
     if (id && id.length > 1) {
       enlace = environment.DRIVE_URL + id[1];

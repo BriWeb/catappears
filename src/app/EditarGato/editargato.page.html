@@ -1,0 +1,40 @@
+<ion-header [translucent]="true" >
+  <ion-toolbar>
+    <ion-title class="centered-title">Editar gato</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form (submit)="editCat($event)">
+    <ion-item class="agregar_item">
+      <ion-input [(ngModel)]="cat.name" label="Nombre" labelPlacement="floating" type="text" placeholder="Nombre"  name="name"></ion-input>
+    </ion-item>
+
+    <ion-item class="agregar_item">
+      <ion-input [(ngModel)]="cat.age" label="Edad" labelPlacement="floating" type="number" placeholder="Edad"  name="age"></ion-input>
+    </ion-item>
+
+    <ion-item class="agregar_item">
+      <ion-input [(ngModel)]="cat.city" label="Ciudad" labelPlacement="floating" type="text" placeholder="Ciudad"  name="city"></ion-input>
+    </ion-item>
+
+    <ion-item class="agregar_item">
+      <ion-input [(ngModel)]="cat.location" label="Localidad" labelPlacement="floating" type="text" placeholder="Localidad"  name="location"></ion-input>
+    </ion-item>
+
+    <ion-item class="agregar_item">
+      <ion-input [(ngModel)]="cat.description" label="Descripcion" labelPlacement="floating" type="text" placeholder="Descripcion"  name="description"></ion-input>
+    </ion-item>
+
+    <ion-item class="agregar_item">
+      <ion-input [(ngModel)]="cat.photo" label="Foto" labelPlacement="floating" type="text" placeholder="Foto"  name="photo"></ion-input>
+    </ion-item>
+    
+    <ion-item class="agregar_item ion-item-no-lines">
+      <ion-checkbox [(ngModel)]="cat.lost"  name="lost" slot="start">Perdido</ion-checkbox>
+    </ion-item>
+
+    <ion-button class="agregar_button" expand="block" color="success" type="submit">Guardar Edición</ion-button>
+  </form>
+
+</ion-content>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UsersService } from 'src/app/helpers/servicio/users.service';
+import { UsersService } from 'src/app/helpers/users/users.service';
+import { NotificationsService } from '../helpers/notifications/notifications.service';
 
 @Component({
   selector: 'InicioPage',
@@ -9,7 +10,7 @@ import { UsersService } from 'src/app/helpers/servicio/users.service';
 })
 export class InicioPage implements OnInit{
 
-  constructor(private servicio: UsersService, private route: ActivatedRoute) { }
+  constructor(private usersService: UsersService, private route: ActivatedRoute, private notificationsService: NotificationsService) { }
 
   cats : Array<any> = [];
   maxCaracteres: number = 100;
@@ -22,14 +23,15 @@ export class InicioPage implements OnInit{
 
   async getAllGatitos(){
     try {
-      const result = await this.servicio.getUsersCatsCollection();
+      const result = await this.usersService.getUsersCatsLost();
       if(result.ret){
         this.cats = result.data;
       } else{
-        console.log("Error al obtener los gatos");
+        this.notificationsService.showError("Error al obtener los gatos.", 'Error');
+
       }
     } catch (error) {
-      console.log(error);
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
     }
   }
 

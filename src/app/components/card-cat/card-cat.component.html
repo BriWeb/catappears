@@ -1,0 +1,39 @@
+<ion-card class="card-container">
+  <div class="card-close">
+    <ion-button color="light" class="boton-superpuesto" (click)="presentAlert()">
+      <ion-icon name="trash" class="large-icon"></ion-icon>
+    </ion-button>
+  </div>
+
+  <ion-img alt="Foto de su mascota" [src]="cat.photo" id="img"></ion-img>
+
+  <ion-card-content>
+    <ion-card-title id="title">{{ cat.name }}</ion-card-title>
+    <ion-card-subtitle id="subtitle"
+      >{{ cat.age > 1 ? cat.age + ' años': cat.age + ' año'}}
+    </ion-card-subtitle>
+    <p>
+      {{ cat.description.length > maxCaracteres ? cat.description.slice(0,
+      maxCaracteres) + '...' : cat.description }}
+    </p>
+    <p>{{cat.city}}</p>
+  </ion-card-content>
+  <div class="card-botones">
+    <ion-button
+      expand="full"
+      color="primary"
+      class="boton-ver"
+      (click)="mostrarMas()"
+      >Ver más</ion-button
+    >
+    <Qr-CatComponent [qrcode]="cat.qr" [qrname]="cat.name"></Qr-CatComponent>
+
+    <ion-button
+      expand="full"
+      color="secondary"
+      class="boton-ver"
+      (click)="editar()"
+      >Editar</ion-button
+    >
+  </div>
+</ion-card>
