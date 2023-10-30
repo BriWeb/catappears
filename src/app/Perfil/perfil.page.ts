@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../helpers/users/users.service';
 import { NotificationsService } from '../helpers/notifications/notifications.service';
 import { ActivatedRoute } from '@angular/router';
-// import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'PerfilPage',
@@ -11,8 +10,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class PerfilPage implements OnInit{
-
-  // private routeSubscription: Subscription = new Subscription();
   
   constructor(private usersService: UsersService, private notificationsService: NotificationsService, private route: ActivatedRoute) {}
 
@@ -41,7 +38,7 @@ export class PerfilPage implements OnInit{
   ];
   
   ngOnInit() {
-    /*his.routeSubscription = */this.route.url.subscribe(url => {
+    this.route.url.subscribe(url => {
       this.getUser();
     });
   }
@@ -54,7 +51,7 @@ export class PerfilPage implements OnInit{
       if(userPhoto){
         this.photo = respuesta.data[0].photo;
       } else {
-        this.photo = '../../assets/avatar.jpeg'
+        this.photo = '../../assets/avatar.jpeg';
       }
      }else{
       this.notificationsService.showError("Error al obtener la foto de perfil del usuario.", 'Error');
@@ -63,10 +60,4 @@ export class PerfilPage implements OnInit{
       this.notificationsService.showError("Ocurrió un error.", 'Error');
     }
   }
-
-  // ngOnDestroy() {
-  //   if (this.routeSubscription) {
-  //     this.routeSubscription.unsubscribe();
-  //   }
-  // }
 }

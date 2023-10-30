@@ -44,12 +44,12 @@ export class CardCatComponent  implements OnInit {
     await alert.present();
   }
 
-  mostrarMas(){
-    console.log("el id es: ", this.cat.id);
+  mostrarGato(){
+    this.router.navigate([`/Mostrar-Gato/${localStorage.getItem('docRefToken')}/${this.cat.id}`]);
   }
 
-  editar(){
-    this.router.navigate([`/EditarGato/${this.cat.id}`]);
+  editarGato(){
+    this.router.navigate([`/Editar-Gato/${this.cat.id}`]);
   }
 
 }

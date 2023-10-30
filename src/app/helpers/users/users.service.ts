@@ -216,6 +216,38 @@ export class UsersService {
     }
   }
 
+  async getUserAndCatDocuments(cat_id : string, user_id : string){
+    let response = {
+      ret: false,
+      data: {
+        user : {},
+        cat : {}
+      } as any
+    }
+
+    try {
+      const userRef = doc(this.db, "users", user_id);
+      let userDoc = await getDoc(userRef);
+      let user = userDoc.data();
+
+      const catRef = doc(userRef, "cats", cat_id);
+      let catDoc = await getDoc(catRef);
+      let cat = catDoc.data();
+
+      response = {
+        ret: true,
+        data: {
+          user : user,
+          cat : cat
+        }
+      }
+
+      return response;
+    } catch (error) {
+      return response;
+    }
+  }
+  
   async createCatDocument(cat : any){
     try {
       const userDocRef = localStorage.getItem('docRefToken');
@@ -228,7 +260,7 @@ export class UsersService {
         const catsCollectionRef = collection(userRef, "cats");
         const docRef = await addDoc(catsCollectionRef, cat);
         
-        const qr = '/gatito-perdido/' + userDocRef + '/' + docRef.id;
+        const qr = '/Mostrar-Gato/' + userDocRef + '/' + docRef.id;
 
         await updateDoc(doc(catsCollectionRef, docRef.id), {
           qr,

@@ -29,11 +29,11 @@
     <ion-item class="agregar_item">
       <ion-input [(ngModel)]="cat.photo" label="Foto" labelPlacement="floating" type="text" placeholder="Foto" (input)="verificarCamposCompletos()" name="photo"></ion-input>
     </ion-item>
-    
-    <ion-item class="agregar_item ion-item-no-lines">
-      <ion-checkbox [(ngModel)]="cat.lost" (input)="verificarCamposCompletos()" name="lost" slot="start">Perdido</ion-checkbox>
-    </ion-item>
 
+    <ion-item class="agregar_item">
+      <ion-checkbox justify="start" [(ngModel)]="cat.lost" name="lost">Perdido</ion-checkbox>
+    </ion-item>
+    
     <ion-button class="agregar_button" expand="block" color="success" type="submit">Guardar</ion-button>
 
     <ion-button class="agregar_button" expand="block" color="danger" (click)="limpiarCampos()" rows="5">Limpiar campos</ion-button>
