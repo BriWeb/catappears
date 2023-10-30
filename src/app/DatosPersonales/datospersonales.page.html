@@ -5,5 +5,29 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  
+  <ion-content>
+    <form (submit)="editUser($event)">
+      <ion-list>
+        <ion-item  class="datos_item">
+          <ion-input label="Nombre" labelPlacement="floating" name="nombre" [(ngModel)]='user.first' type="text" required></ion-input>
+        </ion-item>
 
+        <ion-item  class="datos_item">
+          <ion-input label="Apellido" labelPlacement="floating" name="apellido" [(ngModel)]='user.last' type="text" required></ion-input>
+        </ion-item>
+        
+        <ion-item  class="datos_item">
+          <ion-input label="Dirección" labelPlacement="floating" name="direccion" [(ngModel)]='user.address' type="text" required></ion-input>
+        </ion-item>
+        
+        <ion-item  class="datos_item">
+          <ion-input label="Teléfono" labelPlacement="floating"  name="telefono" [(ngModel)]='user.tel' type="text" required></ion-input>
+        </ion-item>
+      </ion-list>
+  
+      <ion-button expand="block" class="datos_button" type="submit" color="success">Aceptar</ion-button>
+    </form>
+  </ion-content>
+  
 </ion-content>

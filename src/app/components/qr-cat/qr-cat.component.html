@@ -1,5 +1,7 @@
 <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qrcode" style="display: none;"></qrcode>
 
 <ion-button expand="full" color="secondary">
-    <a [href]="qrCodeDownloadLink" download="{{'QRde' + qrname + '.jpg'}}" class="qr_download">Descargar QR</a>
+
+    <a [href]="qrCodeDownloadLink" download="{{'QR_de_' + qrname + '.jpg'}}" class="qr_download">Descargar QR</a>
+
 </ion-button>

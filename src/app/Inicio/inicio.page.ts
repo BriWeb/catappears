@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/helpers/servicio/users.service';
 
 
-
-
-
 @Component({
   selector: 'InicioPage',
   templateUrl: 'inicio.page.html',
@@ -16,7 +13,10 @@ export class InicioPage implements OnInit {
 
   constructor(private servicio: UsersService) { }
 
-  gatitos: Array<any> = [];
+
+
+  cats : Array<any> = [];
+
   maxCaracteres: number = 100;
 
   ngOnInit() {
@@ -25,9 +25,12 @@ export class InicioPage implements OnInit {
 
   async getAllGatitos() {
     try {
-      const result = await this.servicio.getAllUserCollection()
-      this.gatitos = result.data;
-      // console.log("gatitos: ", result);
+      const result = await this.servicio.getUsersCatsCollection();
+      if(result.ret){
+        this.cats = result.data;
+      } else{
+        console.log("Error al obtener los gatos");
+      }
     } catch (error) {
       console.log(error);
     }

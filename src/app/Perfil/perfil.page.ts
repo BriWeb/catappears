@@ -26,7 +26,7 @@ export class PerfilPage implements OnInit{
 
   async getUser(){
     try {
-      const user = await this.servicio.getUserCollection();
+      // await this.servicio.getAllUserCollection();
     } catch (error) {
       console.log(error);
     }

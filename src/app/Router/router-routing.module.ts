@@ -24,23 +24,24 @@ const routes: Routes = [
         canActivate: [isLoginGuard]
       },
       {
-        path: '',
-        redirectTo: '/Login',
-        pathMatch: 'full'
-      },
-      {
         path: 'MisGatos',
         loadChildren: () => import('../MisGatos/misgatos.module').then( m => m.MisGatosPageModule),
         canActivate: [isLoginGuard]
       },
       {
         path: 'AgregarGato',
-        loadChildren: () => import('../AgregarGato/agregargato.module').then( m => m.AgregarGatoPageModule)
+        loadChildren: () => import('../AgregarGato/agregargato.module').then( m => m.AgregarGatoPageModule),
+        canActivate: [isLoginGuard]
       },
       {
         path: 'DatosPersonales',
         loadChildren: () => import('../DatosPersonales/datospersonales.module').then( m => m.DatosPersonalesPageModule),
         canActivate: [isLoginGuard]
+      },
+      {
+        path: '',
+        redirectTo: '/Login',
+        pathMatch: 'full'
       }
     ]
   },

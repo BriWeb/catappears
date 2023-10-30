@@ -22,11 +22,9 @@ export class MisGatosPage implements OnInit {
 
   async findGatitos(){
     try {
-      const result = await this.servicio.getUserCollection();
+      const result = await this.servicio.getUserCatsCollection();
       if(result.ret){
         this.cats = result.data;
-      } else {
-        console.log("No trajo datos");
       }
     } catch (error) {
       console.log(error);
