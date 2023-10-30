@@ -1,57 +1,9 @@
-<!-- <ion-button routerLink="/Perfil" class="back-to-perfil">
-  <ion-icon name="arrow-back-circle-sharp"></ion-icon>
-</ion-button> -->
-
 <ion-header [translucent]="true" >
   <ion-toolbar>
-    <ion-title>Mis gatos</ion-title>
+    <ion-title class="centered-title">Mis gatos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let cat of cats" id="contenedor">
-    <div id="contenedor-close">
-      <ion-button [id]="cat.name" color="light" class="boton-superpuesto">
-        <ion-icon name="close-outline" class="large-icon"></ion-icon>
-      </ion-button>
-      <ion-alert
-        [trigger]="cat.name"
-        class="custom-alert"
-        header="¿Está seguro de eliminar?"
-        [buttons]="alertButtons"
-      ></ion-alert>
-    </div>
-
-    <ion-img alt="Foto de su mascota" [src]="cat.photo" id="img"></ion-img>
-
-    <ion-card-content>
-      <ion-card-title id="title">{{ cat.name }}</ion-card-title>
-      <ion-card-subtitle id="subtitle"
-        >{{ cat.age > 1 ? cat.age + ' años': cat.age + ' año'}}
-      </ion-card-subtitle>
-      <p>
-        {{ cat.description.length > maxCaracteres ? cat.description.slice(0,
-        maxCaracteres) + '...' : cat.description }}
-      </p>
-      <p>{{cat.city}}</p>
-    </ion-card-content>
-    <div id="contenedor-botones">
-      <ion-button
-        expand="full"
-        color="primary"
-        id="boton-ver"
-        (click)="mostrarMas()"
-        >Ver más</ion-button
-      >
-      <Qr-CatComponent [qrcode]="cat.qr" [qrname]="cat.name"></Qr-CatComponent>
-
-      <ion-button
-        expand="full"
-        color="secondary"
-        id="boton-ver"
-        (click)="mostrarMas()"
-        >Editar</ion-button
-      >
-    </div>
-  </ion-card>
+  <CardCatComponent *ngFor="let cat of cats" [cat]="cat" (delete)="delete($event)"></CardCatComponent>
 </ion-content>

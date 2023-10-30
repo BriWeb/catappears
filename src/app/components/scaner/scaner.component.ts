@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner, SupportedFormat } from '@capacitor-community/barcode-scanner';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-scaner',
@@ -8,7 +10,7 @@ import { BarcodeScanner, SupportedFormat } from '@capacitor-community/barcode-sc
 })
 export class ScanerComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private router : Router) { }
 
   async checkPermissionAndStartScan() {
     this.checkPermission().then(async (permissionGranted) => {
@@ -43,6 +45,7 @@ export class ScanerComponent  implements OnInit {
 
     // if the result has content
     if (result.hasContent) {
+      this.router.navigate([""+ result.content]);
       console.log(result.content); // log the raw scanned content
     }
       

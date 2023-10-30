@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../helpers/servicio/users.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { UsersService } from '../helpers/users/users.service';
+import { ActivatedRoute } from '@angular/router';
+import { NotificationsService } from '../helpers/notifications/notifications.service';
 
 @Component({
   selector: 'MisGatosPage',
@@ -9,53 +10,48 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 })
 export class MisGatosPage implements OnInit {
 
-  constructor(private servicio: UsersService, private sanitizer: DomSanitizer) { 
+  constructor(private usersService: UsersService, private route: ActivatedRoute, private notificationsService: NotificationsService) { 
   }
 
   cats: Array<any> = [];
-  maxCaracteres: number = 100;
 
 
   ngOnInit() {
-    this.findGatitos();
+    this.route.url.subscribe(url => {
+      this.findGatitos();
+    });
   }
 
   async findGatitos(){
     try {
-      const result = await this.servicio.getUserCatsCollection();
+      const result = await this.usersService.getUserCatsCollection();
       if(result.ret){
         this.cats = result.data;
+      } else {
+        this.notificationsService.showError("Error al obtener tus gatos.", 'Error');
       }
     } catch (error) {
-      console.log(error);
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
     }
   }
   
-  mostrarMas(){
-    
-  }
 
-  // Alerta de eliminar a un gatito
-    public alertButtons = [
-      {
-        text: 'Cancelar',
-        cssClass: 'alert-button-cancel',
-        role: 'cancel',
-        handler: () => {
-          // console.log('Alert canceled');
-        },
-      },
-      {
-        text: 'Confirmar',
-        cssClass: 'alert-button-confirm',
-        role: 'confirm',
-        handler: () => {
-          // console.log('Alert confirmed');
-        },
-      },
-    ];
+  async delete(id : string){
+    try {
+      const deleted = await this.usersService.deleteCatDocument(id);
+      if(deleted){
+        this.notificationsService.showSuccess("Gato eliminado correctamente.", 'Éxito');
 
-    setResult(ev: any) {
-      // console.log(`Dismissed with role: ${ev.detail.role}`);
+        await this.findGatitos();
+      } else {
+        this.notificationsService.showError("Error al eliminar el gato.", 'Error');
+      }
+      
+    } catch (error) {
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
     }
+  }
+  
+
+  
 }

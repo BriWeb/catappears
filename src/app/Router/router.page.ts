@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsersService } from '../helpers/servicio/users.service';
+import { UsersService } from '../helpers/users/users.service';
 
 
 @Component({

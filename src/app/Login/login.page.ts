@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ViewChild} from '@angular/core';
-import { IonInput, IonModal } from '@ionic/angular';
-import {UsersService} from '../helpers/servicio/users.service';
+import { Component, ViewChild} from '@angular/core';
+import { IonInput, IonModal} from '@ionic/angular';
+import {UsersService} from '../helpers/users/users.service';
+import { NotificationsService } from '../helpers/notifications/notifications.service';
 
 @Component({
   selector: 'LoginPage',
@@ -10,7 +11,7 @@ import {UsersService} from '../helpers/servicio/users.service';
 
 export class LoginPage{
   
-  constructor(private servicio: UsersService) {}
+  constructor(private usersService: UsersService, private notificationsService: NotificationsService) {}
 
   @ViewChild('passInput', { static: false }) passInput: IonInput | undefined;
 
@@ -23,13 +24,13 @@ export class LoginPage{
     pass: ''
   };
   showPassword = false;
-  error: string = '';
  
   @ViewChild(IonModal) modal: IonModal | undefined;
 
   openModal(event?: Event) {
     this.modal?.present();
   }
+
   closeModal() {
     this.modal?.dismiss();
     this.signUp.pass = '';
@@ -50,37 +51,30 @@ export class LoginPage{
     document.getElementById("loading")?.setAttribute('is-open', 'false');
   }
 
-  onWillDismiss() {
-    this.setError();
-  }
-
   setSignInToEmpty(){
     this.signIn.pass = '';
     this.signIn.user = '';
-  }
-
-  setError(message: string = ''){
-    this.error = message;
   }
   
   async handleSignUp(){
     try {
       this.showLoading();
-      this.setError();
-      const result = await this.servicio.createEmail(this.signUp.user, this.signUp.pass);
+      const result = await this.usersService.createEmail(this.signUp.user, this.signUp.pass);
 
       const { ret, data } = result;
 
       if (!ret) {
-        this.setError(data);
+        this.notificationsService.showError(data, 'Error');
+
         return;
       }
 
+      this.notificationsService.showSuccess("Cuenta creada correctamente.", 'Éxito');
       this.closeModal();
       this.setSignInToEmpty();
 
     } catch (error: any) {
-      this.setError(error);
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
     } finally{
       this.hideLoading();
     }
@@ -89,13 +83,12 @@ export class LoginPage{
   async handleSignIn(){
     try {
       this.showLoading();
-      this.setError();
-      const result = await this.servicio.loginEmail(this.signIn.user, this.signIn.pass);
+      const result = await this.usersService.loginEmail(this.signIn.user, this.signIn.pass);
 
       const { ret, data } = result;
 
       if(!ret){
-        this.setError(data);
+        this.notificationsService.showError(data, 'Error');
         return;
       } 
 
@@ -103,10 +96,9 @@ export class LoginPage{
       this.signIn.user = '';
 
     } catch (error: any) {
-      this.setError(error);
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
     } finally{
       this.hideLoading();
     }
   }
-
 }

@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-// ejecutar npm install firebase
 import { initializeApp } from 'firebase/app';
-import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, FacebookAuthProvider } from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, updateDoc } from 'firebase/firestore';
+import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword/*, FacebookAuthProvider */} from 'firebase/auth';
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, updateDoc, deleteDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { Router } from "@angular/router";
-import { __await } from 'tslib';
-import { retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +12,19 @@ import { retry } from 'rxjs';
 
 // El método doc() se utiliza para obtener una referencia de un documento específico dentro de una colección. 
 // Recibe tres parámetros: 
-//    *El primero es la configuración de la base de datos.
+//    *El primero es la referencia al documento padre en el que se encuentra la colección. (El documento padre puede ser la
+//          base de datos misma, o la referencia de un documento obtenida con el método doc() )
 //    *El segundo es el nombre de la colección que contiene el documento que se quiere obtener.
 //    *El tercero es el id del documento que se quiere obtener. (El id del documento del usuario logueado se obtiene con 
 //          localStorage.getItem('docRefToken') ya que ahí lo almacenamos al loguearse.)
 
 
 // El método getDoc() se utiliza para obtener un documento específico en una colección o subcolección. 
+// Recibe un parámetro: 
+//    *El único parámetro que recibe es la referencia del documento (Obtenida con el método doc() ).
+
+
+// El método deleteDoc() se utiliza para eliminar un documento específico en una colección o subcolección. 
 // Recibe un parámetro: 
 //    *El único parámetro que recibe es la referencia del documento (Obtenida con el método doc() ).
 
@@ -62,27 +65,25 @@ import { retry } from 'rxjs';
 
 export class UsersService {
 
-
   constructor(private router: Router) { }
 
   error = environment.AUTH_ERROR_CODES;
-
   app = initializeApp(environment.FIREBASE_CONFIG);
   auth = getAuth();
   db = getFirestore(this.app);
+  // provider = new FacebookAuthProvider();
 
-  provider = new FacebookAuthProvider();
-
-  isLogged(): boolean{
+  isLogged(){
     return localStorage.getItem('accessToken') ? true : false;
   }
 
-  async logout(): Promise<void> {
+  async logout(){
     try {
       await signOut(this.auth);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('docRefToken');
-      this.router.navigate(['/Login']);
+      // this.router.navigate(['/Login']);
+      window.location.reload()
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
@@ -99,7 +100,7 @@ export class UsersService {
         data: user
       }
 
-      await this.createUserCollection(userCredential);
+      await this.createUserDocument(userCredential);
       
       return result;
       
@@ -143,7 +144,7 @@ export class UsersService {
     }
   }
 
-  async createUserCollection(userCredential: any) {
+  async createUserDocument(userCredential: any) {
     const newUser = {
       uid : userCredential.user.uid,
       first: "",
@@ -152,7 +153,8 @@ export class UsersService {
       creationTime : userCredential.user.metadata.creationTime,
       lastLoginAt : userCredential.user.metadata.lastLoginAt,
       address: "",
-      tel: ""
+      tel: "",
+      photo: ""
     };
 
     try {
@@ -163,7 +165,7 @@ export class UsersService {
     }
   }
 
-  async getUserCollection(){
+  async getUserDocument(){
 
     let response = {
       ret: false,
@@ -188,7 +190,65 @@ export class UsersService {
     }
   }
 
-  async createCatColecction(cat : any){
+  async getCatDocument(id_user : string, id_cat : string){
+    
+    let response = {
+      ret : false,
+      data: {} as any
+    }
+
+    try {
+      let userDocRef = doc(this.db, 'users', id_user);
+
+      let catDocRef =  doc(userDocRef, 'cats', id_cat);
+
+      let catDoc = await getDoc(catDocRef);
+
+      response = {
+        ret : true,
+        data: catDoc.data()
+      }
+
+      return response;
+
+    } catch (error) {
+      return response;
+    }
+  }
+
+  async getUserAndCatDocuments(cat_id : string, user_id : string){
+    let response = {
+      ret: false,
+      data: {
+        user : {},
+        cat : {}
+      } as any
+    }
+
+    try {
+      const userRef = doc(this.db, "users", user_id);
+      let userDoc = await getDoc(userRef);
+      let user = userDoc.data();
+
+      const catRef = doc(userRef, "cats", cat_id);
+      let catDoc = await getDoc(catRef);
+      let cat = catDoc.data();
+
+      response = {
+        ret: true,
+        data: {
+          user : user,
+          cat : cat
+        }
+      }
+
+      return response;
+    } catch (error) {
+      return response;
+    }
+  }
+  
+  async createCatDocument(cat : any){
     try {
       const userDocRef = localStorage.getItem('docRefToken');
   
@@ -200,7 +260,7 @@ export class UsersService {
         const catsCollectionRef = collection(userRef, "cats");
         const docRef = await addDoc(catsCollectionRef, cat);
         
-        const qr = '/gatito-perdido/' + userDocRef + '/' + docRef.id;
+        const qr = '/Mostrar-Gato/' + userDocRef + '/' + docRef.id;
 
         await updateDoc(doc(catsCollectionRef, docRef.id), {
           qr,
@@ -210,12 +270,11 @@ export class UsersService {
       }
       return null;
     } catch (error) {
-      console.log("Error al crear un gatito.");
       return null;
     }
   }
 
-  async getUsersCatsCollection(){
+  async getUsersCatsLost(){
     
     let result = {
       ret: false,
@@ -263,12 +322,38 @@ export class UsersService {
     }
   }
 
-  async editUser(user : object){
+  async editUserDocument(user : any){
     try {
       const userDocRef = localStorage.getItem('docRefToken');
       if(userDocRef){
+        if(user.photo != ''){
+          let photo = this.formatPhoto(user.photo);
+          user.photo = photo;
+        }
         const userRef = doc(this.db, "users", userDocRef);
         await updateDoc(userRef, user);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async editCatDocument(cat : any, id_cat : string){
+    try {
+      const userDocId = localStorage.getItem('docRefToken');
+      if(userDocId){
+
+        let userDocRef = doc(this.db, 'users', userDocId);
+
+        let catDocRef =  doc(userDocRef, 'cats', id_cat);
+        if(cat.photo != ''){
+          let photo = this.formatPhoto(cat.photo);
+          cat.photo = photo;
+        }
+
+        await updateDoc(catDocRef, cat);
         return true;
       }
       return false;
@@ -293,7 +378,7 @@ export class UsersService {
   
         let cats : any = [];
         catsDoc.forEach(catDoc => {
-          cats = [...cats, catDoc.data()]
+          cats = [...cats, {...catDoc.data(), 'id' : catDoc.id}]
         });
   
         response = {
@@ -310,10 +395,28 @@ export class UsersService {
     }
   }
 
-  async updateCatCollection(){
+  async updateCatDocument(){
     
   }
 
+  async deleteCatDocument(id : string){
+    let deleted = false;
+
+    try {
+      const userDocRef = localStorage.getItem('docRefToken');
+      if(userDocRef){
+        const userRef = doc(this.db, "users", userDocRef);
+        const catsRef = doc(userRef, "cats", id);
+        
+        await deleteDoc(catsRef);
+        deleted = true;
+        return deleted;
+      }
+      return deleted;
+    } catch (error) {
+      return deleted;
+    }
+  }
 
   async getIdUserLogin(email : string | null) {
     try {
@@ -341,6 +444,10 @@ export class UsersService {
   }
 
   getIdPhoto(enlace : string){
+    if (enlace.includes('https://drive.google.com/uc?export=download&id=')) {
+      return enlace;
+    }
+
     let id = enlace.match(/\/d\/(.*?)\/view/);
     if (id && id.length > 1) {
       enlace = environment.DRIVE_URL + id[1];

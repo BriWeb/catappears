@@ -1,34 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../helpers/servicio/users.service';
+import { UsersService } from '../helpers/users/users.service';
+import { ActivatedRoute } from '@angular/router';
+import { NotificationsService } from '../helpers/notifications/notifications.service';
 
 @Component({
   selector: 'DatosPersonalesPage',
   templateUrl: './datospersonales.page.html',
   styleUrls: ['./datospersonales.page.scss'],
 })
-export class DatosPersonalesPage implements OnInit {
+export class DatosPersonalesPage implements OnInit  {
 
-  constructor(private servicio: UsersService) { }
+  constructor(private usersService: UsersService, private route: ActivatedRoute, private notificationsService: NotificationsService) { }
   user = {
     address:'',
     last:'',
     first:'',
-    tel:''
-  }
-  ngOnInit() {
-    this.getUsers()
+    tel:'',
+    photo: ''
   }
 
-  async getUsers(){
+  ngOnInit() {
+    this.route.url.subscribe(url => {
+      this.getUser();
+    });
+  }
+
+  async getUser(){
     try {
-     const respuesta = await this.servicio.getUserCollection()
+     const respuesta = await this.usersService.getUserDocument();
      if(respuesta.ret){
-    this.user = respuesta.data[0]
+      this.user = respuesta.data[0];
      }else{
-      console.log('El método lanzó error')
-     }
+      this.notificationsService.showError("Error al obtener los datos del usuario.", 'Error');
+    }
     } catch (error) {
-      console.log('El método lanzó error')
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
     }
   }
 
@@ -36,12 +42,14 @@ export class DatosPersonalesPage implements OnInit {
     e.preventDefault();
     try {
 
-      let ok = await this.servicio.editUser(this.user);  
+      let ok = await this.usersService.editUserDocument(this.user);  
       if(ok){
-        console.log("Éxito al editar usuario");
+        this.notificationsService.showSuccess("Datos guardados correctamente.", 'Éxito');
+
+        await this.getUser();
       }
     } catch (error) {
-      console.log("Error al editar usuario");
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
     }
   }
 

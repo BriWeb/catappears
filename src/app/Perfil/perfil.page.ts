@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../helpers/servicio/users.service';
-import { SafeUrl } from '@angular/platform-browser';
+import { UsersService } from '../helpers/users/users.service';
+import { NotificationsService } from '../helpers/notifications/notifications.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -10,34 +11,17 @@ import { SafeUrl } from '@angular/platform-browser';
 })
 
 export class PerfilPage implements OnInit{
+  
+  constructor(private usersService: UsersService, private notificationsService: NotificationsService, private route: ActivatedRoute) {}
 
-  constructor(private servicio: UsersService) {}
-
-  ngOnInit(){
-    this.getUser();
-  }
-
-  sanitizedUrl : SafeUrl  = '';
-  url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-
-  onChangeURL(url: SafeUrl) {
-    this.sanitizedUrl = url;
-  }
-
-  async getUser(){
-    try {
-      // await this.servicio.getAllUserCollection();
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  photo = '';
 
   public alertButtons = [
     {
       text: 'Cancelar',
       role: 'cancel',
       handler: () => {
-        // console.log('Alert canceled');
+
       },
     },
     {
@@ -45,15 +29,36 @@ export class PerfilPage implements OnInit{
       role: 'confirm',
       handler: async () => {
         try {
-          await this.servicio.logout();
+          await this.usersService.logout();
+
         } catch (error) {
-          
+          this.notificationsService.showError("Ocurrió un error.", 'Error');
         }
       },
     },
   ];
   
-  setResult(ev:any) {
-    // console.log(`Dismissed with role: ${ev.detail.role}`);
+  ngOnInit() {
+    this.route.url.subscribe(url => {
+      this.getUser();
+    });
+  }
+
+  async getUser(){
+    try {
+     const respuesta = await this.usersService.getUserDocument();
+     if(respuesta.ret){
+      let userPhoto = respuesta.data[0].photo;
+      if(userPhoto){
+        this.photo = respuesta.data[0].photo;
+      } else {
+        this.photo = '../../assets/avatar.jpeg';
+      }
+     }else{
+      this.notificationsService.showError("Error al obtener la foto de perfil del usuario.", 'Error');
+    }
+    } catch (error) {
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
+    }
   }
 }

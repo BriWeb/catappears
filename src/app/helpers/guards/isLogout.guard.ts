@@ -1,6 +1,6 @@
 import { inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { UsersService } from "../servicio/users.service";
+import { UsersService } from "../users/users.service";
 
 export const isLogoutGuard = () => {
     const router = inject(Router);

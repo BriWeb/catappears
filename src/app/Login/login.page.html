@@ -8,15 +8,14 @@
   </div>
   <form (submit)="handleSignIn()">
     <!-- <fieldset> -->
-      <legend>Sign In</legend>
+      <!-- <legend>Login</legend> -->
       <ion-item class="form__item">
         <ion-input 
           class="form__input"
           name="signInUser"
           [(ngModel)]="signIn.user"
-          label="Introduce el usuario" 
+          label="Introduce tu usuario" 
           labelPlacement="floating" 
-          [clearInput]="true" 
           placeholder="Email" 
           [counter]="true"
           maxlength="40">
@@ -28,7 +27,7 @@
           name="signInPass"
           [(ngModel)]="signIn.pass"
           [type]="showPassword ? 'text' : 'password'"
-          label="Introduce la contraseña" 
+          label="Introduce tu contraseña" 
           labelPlacement="floating" 
           placeholder="Contraseña" 
           [clearOnEdit]="false"
@@ -58,12 +57,12 @@
       ¿Olvidó su contraseña?
     </ion-button>
     <ion-button fill="clear" expand="block" (click)="openModal($event)" color="danger">
-      Sign Up
+      Crear cuenta
     </ion-button>
   </div>
 </div>
 
-<ion-modal class="singin-modal" (willDismiss)="onWillDismiss()" handle="true">
+<ion-modal class="singin-modal" handle="true">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -108,4 +107,3 @@
   </ng-template>
 </ion-modal>
 <ion-loading class="custom-loading" message="Cargando..." spinner="lines-sharp" id="loading"></ion-loading>
-<AlertComponent *ngIf="error" [error]="error" (setError)="setError($event)"></AlertComponent>

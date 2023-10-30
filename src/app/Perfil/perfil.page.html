@@ -1,22 +1,22 @@
 <ion-header [translucent]="true" >
   <ion-toolbar>
-    <ion-title>Perfil</ion-title>
+    <ion-title class="centered-title">Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <!-- Imagen de perfil -->
   <div class="perfil-image-container">
-    <img src="https://i.pinimg.com/originals/ba/79/c7/ba79c7805f625367f33bd634be332d33.jpg" alt="Imagen de perfil" class="perfil-image">
+    <img [src]="photo" alt="Imagen de perfil" class="perfil-image">
   </div>
 
   <!-- Botones -->
-  <ion-button class="perfil_button" expand="block" color="tertiary" routerLink="/MisGatos">Ver mis gatos</ion-button>
-  <ion-button class="perfil_button" expand="block" color="tertiary" routerLink="/AgregarGato">Agregar un gato</ion-button>
-  <ion-button class="perfil_button" expand="block" color="tertiary" routerLink="/DatosPersonales">Datos personales</ion-button>
+  <ion-button class="perfil_button" expand="block" color="tertiary" routerLink="/Mis-Gatos">Ver mis gatos</ion-button>
+  <ion-button class="perfil_button" expand="block" color="tertiary" routerLink="/Agregar-Gato">Agregar un gato</ion-button>
+  <ion-button class="perfil_button" expand="block" color="tertiary" routerLink="/Datos-Personales">Datos personales</ion-button>
   <ion-button class="perfil_button" expand="block" color="tertiary" id="icon-log-out" fill="outline" color="danger" >Cerrar Sesión</ion-button>
 
-  <ion-alert trigger="icon-log-out" header="¿Desea cerrar sesión?" [buttons]="alertButtons" (didDismiss)="setResult($event)"></ion-alert>
+  <ion-alert trigger="icon-log-out" header="¿Desea cerrar sesión?" [buttons]="alertButtons" ></ion-alert>
 
 
 </ion-content>

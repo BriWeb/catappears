@@ -24,19 +24,28 @@ const routes: Routes = [
         canActivate: [isLoginGuard]
       },
       {
-        path: 'MisGatos',
+        path: 'Mis-Gatos',
         loadChildren: () => import('../MisGatos/misgatos.module').then( m => m.MisGatosPageModule),
         canActivate: [isLoginGuard]
       },
       {
-        path: 'AgregarGato',
+        path: 'Agregar-Gato',
         loadChildren: () => import('../AgregarGato/agregargato.module').then( m => m.AgregarGatoPageModule),
         canActivate: [isLoginGuard]
       },
       {
-        path: 'DatosPersonales',
+        path: 'Datos-Personales',
         loadChildren: () => import('../DatosPersonales/datospersonales.module').then( m => m.DatosPersonalesPageModule),
         canActivate: [isLoginGuard]
+      },
+      {
+        path: 'Editar-Gato/:id',
+        loadChildren: () => import('../EditarGato/editargato.module').then( m => m.EditarGatoPageModule),
+        canActivate: [isLoginGuard]
+      },
+      {
+        path: 'Mostrar-Gato/:user_id/:cat_id',
+        loadChildren: () => import('../MostrarGato/mostrargato.module').then( m => m.MostrarGatoPageModule)
       },
       {
         path: '',
