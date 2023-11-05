@@ -1,6 +1,6 @@
 <ion-tabs>
 
-  <ion-tab-bar slot="bottom" >
+  <ion-tab-bar slot="bottom">
     <ion-tab-button tab="Login" href="/Login" *ngIf="!usersService.isLogged()">
       <ion-icon aria-hidden="true" name="log-in"></ion-icon>
       <ion-label>Login</ion-label>
@@ -11,8 +11,10 @@
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="Perfil" href="/Perfil" *ngIf="usersService.isLogged()" >
-      <ion-icon aria-hidden="true" name="accessibility"></ion-icon>
+    <app-scaner></app-scaner>
+
+    <ion-tab-button tab="Perfil" href="/Perfil" *ngIf="usersService.isLogged()">
+      <ion-icon aria-hidden="true" name="logo-octocat"></ion-icon>
       <ion-label>Perfil</ion-label>
     </ion-tab-button>
   </ion-tab-bar>

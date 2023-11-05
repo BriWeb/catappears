@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
+
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, 
     ToastrModule.forRoot({
       timeOut: 3000,
@@ -20,6 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
       // preventDuplicates: true, 
     }),
   ],
+
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, UsersService],
   bootstrap: [AppComponent],
 })

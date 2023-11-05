@@ -3,6 +3,7 @@ import { UsersService } from '../helpers/users/users.service';
 import { NotificationsService } from '../helpers/notifications/notifications.service';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'PerfilPage',
   templateUrl: 'perfil.page.html',

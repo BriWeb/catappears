@@ -15,7 +15,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     CommonModule,
     FormsModule,
     PerfilPageRoutingModule,
-    QRCodeModule
+    QRCodeModule,
   ],
   declarations: [PerfilPage]
 })
