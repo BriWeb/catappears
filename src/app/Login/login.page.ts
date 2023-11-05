@@ -1,7 +1,9 @@
 import { Component, ViewChild} from '@angular/core';
-import { IonInput, IonModal} from '@ionic/angular';
+import { IonInput} from '@ionic/angular';
 import {UsersService} from '../helpers/users/users.service';
 import { NotificationsService } from '../helpers/notifications/notifications.service';
+import { ModalController } from '@ionic/angular';
+
 
 @Component({
   selector: 'LoginPage',
@@ -11,7 +13,7 @@ import { NotificationsService } from '../helpers/notifications/notifications.ser
 
 export class LoginPage{
   
-  constructor(private usersService: UsersService, private notificationsService: NotificationsService) {}
+  constructor(private usersService: UsersService, private notificationsService: NotificationsService, private modalController: ModalController) {}
 
   @ViewChild('passInput', { static: false }) passInput: IonInput | undefined;
 
@@ -23,19 +25,22 @@ export class LoginPage{
     user: '',
     pass: ''
   };
+  reset = {
+    user: '',
+  }
   showPassword = false;
  
-  @ViewChild(IonModal) modal: IonModal | undefined;
 
-  openModal(event?: Event) {
-    this.modal?.present();
+  async dismissResetModal() {
+    await this.modalController.dismiss();
   }
-
-  closeModal() {
-    this.modal?.dismiss();
+  
+  async dismissSignUpModal() {
+    await this.modalController.dismiss();
     this.signUp.pass = '';
     this.signUp.user = '';
   }
+
 
   togglePasswordVisibility(event?: Event) {
     this.showPassword = !this.showPassword;
@@ -56,6 +61,23 @@ export class LoginPage{
     this.signIn.user = '';
   }
   
+  async createGoogle(){
+    try {
+      await this.usersService.createGoogleAccount();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // async createFacebook(){
+  //   try {
+  //     await this.usersService.createFacebookAccount();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  
   async handleSignUp(){
     try {
       this.showLoading();
@@ -68,9 +90,9 @@ export class LoginPage{
 
         return;
       }
+      this.notificationsService.showInfo("Recibirá un mail, revise su 'Bandeja de entrada' o 'Correo no deseado'.", 'Verifique su cuenta');
 
-      this.notificationsService.showSuccess("Cuenta creada correctamente.", 'Éxito');
-      this.closeModal();
+      this.dismissSignUpModal();
       this.setSignInToEmpty();
 
     } catch (error: any) {
@@ -94,6 +116,28 @@ export class LoginPage{
 
       this.signIn.pass = '';
       this.signIn.user = '';
+
+    } catch (error: any) {
+      this.notificationsService.showError("Ocurrió un error.", 'Error');
+    } finally{
+      this.hideLoading();
+    }
+  }
+
+  async handleReset(){
+    try {
+      this.showLoading();
+      const result = await this.usersService.resetPassword(this.reset.user);
+
+      if(!result){
+        this.notificationsService.showError("Imposible reiniciar.", 'Error');
+        return;
+      } 
+
+      this.notificationsService.showInfo("Recibirá un mail, revise su 'Bandeja de entrada' o 'Correo no deseado'.", 'Reinicie su contraseña');
+
+      this.dismissResetModal();
+      this.reset.user = '';
 
     } catch (error: any) {
       this.notificationsService.showError("Ocurrió un error.", 'Error');

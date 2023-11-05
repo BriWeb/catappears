@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword/*, FacebookAuthProvider */} from 'firebase/auth';
+import {getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithPopup/*, FacebookAuthProvider*/, GoogleAuthProvider} from 'firebase/auth';
 import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, updateDoc, deleteDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { Router } from "@angular/router";
@@ -82,7 +82,6 @@ export class UsersService {
       await signOut(this.auth);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('docRefToken');
-      // this.router.navigate(['/Login']);
       window.location.reload()
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
@@ -95,12 +94,15 @@ export class UsersService {
       const userCredential = await createUserWithEmailAndPassword(this.auth, username, password);
       
       const {user} = userCredential;
+      await sendEmailVerification(user);
+
       result = {
         ret: true, 
         data: user
       }
 
       await this.createUserDocument(userCredential);
+
       
       return result;
       
@@ -118,10 +120,15 @@ export class UsersService {
   async loginEmail(username : string, password : string): Promise<any>{
     let result;
     try {
-      // const esta = this.auth.authStateReady();
       const userCredential = await signInWithEmailAndPassword(this.auth, username, password);
       const {user} = userCredential;
       
+      if(!user.emailVerified){
+        await sendEmailVerification(user);
+        result = {ret: false, data: "Recibirá un mail, revise su 'Bandeja de entrada' o 'Correo no deseado'."};
+        return result;
+      }
+
       const token = await user.getIdToken();
       localStorage.setItem('accessToken', token);
 
@@ -144,6 +151,87 @@ export class UsersService {
     }
   }
 
+  async createGoogleAccount(): Promise<any> {
+    try {
+      const userCredential = await signInWithPopup(this.auth, new GoogleAuthProvider());
+      const {user} = userCredential;
+      
+      const token = await user.getIdToken();
+      localStorage.setItem('accessToken', token);
+
+      const collectionRef = collection(this.db, 'users');
+
+      let id : any;
+      let result;
+
+      result = await getDocs(query(collectionRef, where("uid", "==", user.uid))); 
+
+      if (result.empty) {
+        result = await this.createUserDocument(userCredential);
+        if(result){
+          id = result.id;
+        }
+      }else {
+        id = result?.docs[0].id;
+      }
+
+      localStorage.setItem('docRefToken', id);
+      this.router.navigate(['/Perfil']);
+
+    } catch (error) {
+      console.log('Error al iniciar sesión con Google: ', error);
+    }
+  }
+
+  // async createFacebookAccount(): Promise<any> {
+  //   const provider = new FacebookAuthProvider();
+
+  //   try {
+  //     const userCredential = await signInWithPopup(this.auth, provider);
+  //     const {user} = userCredential;
+
+  //     const credential = FacebookAuthProvider.credentialFromResult(userCredential);
+  //     const accessToken = credential?.accessToken;
+  //     console.log("usuario: ", credential, accessToken )
+      
+  //     const token = await user.getIdToken();
+  //     localStorage.setItem('accessToken', token);
+
+  //     const collectionRef = collection(this.db, 'users');
+
+  //     let id : any;
+  //     let result;
+
+  //     result = await getDocs(query(collectionRef, where("uid", "==", user.uid))); 
+
+  //     if (result.empty) {
+  //       result = await this.createUserDocument(userCredential);
+  //       if(result){
+  //         id = result.id;
+  //       }
+  //     }else {
+  //       id = result?.docs[0].id;
+  //     }
+
+  //     localStorage.setItem('docRefToken', id);
+  //     this.router.navigate(['/Perfil']);
+
+  //   } catch (error) {
+  //     console.log('Error al iniciar sesión con Facebook: ', error);
+  //   }
+  // }
+
+  async resetPassword(email: string): Promise<any> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+
+      return true;
+
+    } catch (error) {
+      return false;
+    }
+  }
+
   async createUserDocument(userCredential: any) {
     const newUser = {
       uid : userCredential.user.uid,
@@ -158,10 +246,11 @@ export class UsersService {
     };
 
     try {
-      await addDoc(collection(this.db, "users"), newUser);
-
+      const document = await addDoc(collection(this.db, "users"), newUser);
+      return document;
     } catch (error) {
       console.error('Error al crear la colección de usuario', error);
+      return null;
     }
   }
 
