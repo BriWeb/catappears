@@ -6,14 +6,20 @@
       <ion-label>Login</ion-label>
     </ion-tab-button>
 
-    <app-scaner *ngIf="!usersService.isLogged()"></app-scaner>
+    <ion-tab-button tab="Escanear" href="/Escanear" *ngIf="!usersService.isLogged()">
+      <ion-icon aria-hidden="true" name="qr-code-outline"></ion-icon>
+      <ion-label>Escanear</ion-label>
+    </ion-tab-button>
 
     <ion-tab-button tab="Inicio" href="/Inicio">
       <ion-icon aria-hidden="true" name="home"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
-    <app-scaner *ngIf="usersService.isLogged()"></app-scaner>
+    <ion-tab-button tab="Escanear" href="/Escanear" *ngIf="usersService.isLogged()">
+      <ion-icon aria-hidden="true" name="qr-code-outline"></ion-icon>
+      <ion-label>Escanear</ion-label>
+    </ion-tab-button>
 
     <ion-tab-button tab="Perfil" href="/Perfil" *ngIf="usersService.isLogged()">
       <ion-icon aria-hidden="true" name="logo-octocat"></ion-icon>

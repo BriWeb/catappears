@@ -3,12 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { RouterPage } from './router.page';
 import { isLoginGuard } from '../helpers/guards/isLogin.guard';
 import { isLogoutGuard } from '../helpers/guards/isLogout.guard';
+// import {ScanerComponent} from '../components/scaner/scaner.component';
 
 const routes: Routes = [
   {
     path: '',
     component: RouterPage,
     children: [
+      // {
+      //   path: 'Escanear',
+      //   component: ScanerComponent
+      // },
       {
         path: 'Login',
         loadChildren: () => import('../Login/login.module').then(m => m.LoginPageModule),

@@ -1,4 +1,4 @@
-<ion-tab-button (click)="checkPermissionAndStartScan()">
-  <ion-icon name="qr-code-outline"></ion-icon>
-  <ion-label>ScanQr</ion-label>
-</ion-tab-button>
+<ion-button class="close-scan" (click)="stopScan()" fill="clear" shape="round">
+  <ion-icon name="close-circle" slot="icon-only" size="large" color="danger"></ion-icon>
+  <!-- <ion-label>Detener</ion-label> -->
+</ion-button>
